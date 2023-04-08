@@ -7,8 +7,8 @@ import './index.scss'
 
 import DefaultLayout from './layouts/default'
 import ErrorPage from './error-page'
-import Home from './routes/home'
-import Wishlist from './routes/wishlist'
+import HomeRoute from './routes/home.route'
+import Wishlist from './routes/wishlist.route'
 
 const router = createBrowserRouter([
   {
@@ -18,7 +18,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />,
+        element: <HomeRoute />,
       },
       {
         path: '/wishlist',
@@ -45,4 +45,4 @@ serviceWorkerRegistration.unregister()
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals(console.log)
+// reportWebVitals(console.log)
