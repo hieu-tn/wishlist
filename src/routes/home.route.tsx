@@ -1,3 +1,4 @@
+import React from "react"
 import {Container, Grid, Stack} from '@mui/material'
 import 'styles/routes/home.scss'
 
@@ -10,14 +11,7 @@ export default function HomeRoute() {
   return (
     <>
       <Container>
-        <Stack
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-          spacing={2}
-        >
-          <SearchForm/>
-        </Stack>
+        <SearchForm/>
       </Container>
 
       <section className="results">

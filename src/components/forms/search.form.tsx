@@ -1,33 +1,47 @@
 import React, {useState} from "react"
-import {Box, Button, TextField} from '@mui/material'
+import {Box, Button, Stack, TextField} from '@mui/material'
 import {useDispatch} from 'react-redux'
+
+import * as crawlerActions from 'store/crawler/reducer'
 
 export default function SearchForm() {
   const dispatch = useDispatch()
-  const [query, setQuery] = useState('')
+  const [keyword, setKeyword] = useState('')
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(e.target.value)
+    setKeyword(e.target.value)
   }
 
   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (query.length <= 2) return
+    if (keyword.length <= 2) return
 
-    // dispatch()
+    dispatch(crawlerActions.setKeyword(keyword))
   }
 
   return (
-    <>
-      <Box
-        component="form"
-        noValidate
-        autoComplete="off"
-        onSubmit={handleOnSubmit}
+    <Box
+      component="form"
+      noValidate
+      autoComplete="off"
+      onSubmit={handleOnSubmit}
+    >
+      <Stack
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+        spacing={2}
       >
-        <TextField id="query" label="Product" variant="outlined" value={query} onChange={handleOnChange}/>
-        <Button variant="contained" type="submit">Submit</Button>
-      </Box>
-    </>
+        <TextField
+          id="query"
+          label="Product"
+          variant="outlined"
+          fullWidth
+          placeholder="Enter product name..."
+          value={keyword}
+          onChange={handleOnChange}/>
+        <Button variant="contained" type="submit" size="large">Submit</Button>
+      </Stack>
+    </Box>
   )
 }

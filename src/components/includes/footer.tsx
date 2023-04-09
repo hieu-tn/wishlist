@@ -4,14 +4,14 @@ import {Container, Stack} from "@mui/material";
 export default function Footer() {
   return (
     <footer>
-      <Container fixed>
+      <Container>
         <Stack
           direction="row"
           justifyContent="center"
           alignItems="center"
           spacing={2}
         >
-          <p>Footer</p>
+          <p>Hieu Tran</p>
         </Stack>
       </Container>
     </footer>

@@ -13,7 +13,7 @@ export default function Header() {
 
   return (
     <header className={styles.header}>
-      <Container fixed>
+      <Container>
         <nav>
           <Stack
             direction="row"

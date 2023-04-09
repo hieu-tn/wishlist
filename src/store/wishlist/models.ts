@@ -1,6 +1,8 @@
 // import {IProductItem} from "components/common/product-item.component";
 // import {PayloadAction} from "@reduxjs/toolkit";
-
+//
+// export interface IWishlistReducer {
+// }
 // export interface IWishlistItemAction extends PayloadAction {
 //   type: 'wishlist/addItem'
 //   payload: IProductItem
