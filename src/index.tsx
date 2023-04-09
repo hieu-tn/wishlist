@@ -4,11 +4,14 @@ import {createBrowserRouter, RouterProvider} from 'react-router-dom'
 import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 import reportWebVitals from './reportWebVitals'
 import './index.scss'
+import { Provider } from 'react-redux'
 
-import DefaultLayout from './layouts/default'
+import store from './store/store'
+import DefaultLayout from './layouts/default.layout'
 import ErrorPage from './error-page'
 import HomeRoute from './routes/home.route'
 import Wishlist from './routes/wishlist.route'
+
 
 const router = createBrowserRouter([
   {
@@ -33,7 +36,9 @@ const root = ReactDOM.createRoot(
 )
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>
 )
 

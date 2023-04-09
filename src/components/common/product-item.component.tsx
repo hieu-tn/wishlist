@@ -1,7 +1,8 @@
-import {Link} from "@mui/material";
+import {IconButton, Link} from "@mui/material";
 import styles from "styles/components/common/product-item.module.scss"
 
 import {PROVIDERS} from "../../constants/providers";
+import MapsUgcTwoToneIcon from '@mui/icons-material/MapsUgcTwoTone';
 
 export type ProductItemProps = {
   data: IProductItem
@@ -18,7 +19,9 @@ export interface IProductItem {
 
 // @ts-ignore
 export default function ProductItemComponent({data}: ProductItemProps) {
-  console.log(data)
+
+
+
   return (
     <div className={styles.productItem}>
       <div className={styles.image}>
@@ -28,9 +31,12 @@ export default function ProductItemComponent({data}: ProductItemProps) {
           alt={data.name}
           loading="lazy"
         />
+        <IconButton aria-label="add">
+          <MapsUgcTwoToneIcon />
+        </IconButton>
       </div>
-      <div>
-        <p><Link href={data.url} target="_blank">{data.name}</Link></p>
+      <div className={styles.content}>
+        <p><Link href={data.url} underline="hover" target="_blank">{data.name}</Link></p>
         <p>{data.description}</p>
         <p>{data.regularPrice}</p>
         <p>{data.provider}</p>
