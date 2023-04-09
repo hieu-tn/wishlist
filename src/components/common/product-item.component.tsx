@@ -1,28 +1,10 @@
-import {IconButton, Link} from "@mui/material";
+import {IconButton, Link} from "@mui/material"
 import styles from "styles/components/common/product-item.module.scss"
 
-import {PROVIDERS} from "../../constants/providers";
-import MapsUgcTwoToneIcon from '@mui/icons-material/MapsUgcTwoTone';
+import MapsUgcTwoToneIcon from '@mui/icons-material/MapsUgcTwoTone'
+import {ProductItemProps} from "models/product-item.models"
 
-export type ProductItemProps = {
-  data: IProductItem
-}
-
-export interface IProductItem {
-  id: string,
-  url: string,
-  imageUrl: string
-  name: string
-  description?: string
-  regularPrice: string
-  provider: PROVIDERS
-}
-
-// @ts-ignore
 export default function ProductItemComponent({data}: ProductItemProps) {
-
-
-
   return (
     <div className={styles.productItem}>
       <div className={styles.image}>
