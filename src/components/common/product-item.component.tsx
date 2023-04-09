@@ -9,6 +9,7 @@ export type ProductItemProps = {
 }
 
 export interface IProductItem {
+  id: string,
   url: string,
   imageUrl: string
   name: string

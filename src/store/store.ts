@@ -1,9 +1,9 @@
-import {combineReducers, configureStore} from "@reduxjs/toolkit";
+import {combineReducers, configureStore} from "@reduxjs/toolkit"
 
-import todosReducer from "./todos/reducer";
+import wishlistReducer from "./wishlist/reducer"
 
 const rootReducer = combineReducers({
-  todos: todosReducer
+  wishlist: wishlistReducer
 })
 
 const store = configureStore({
