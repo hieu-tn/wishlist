@@ -1,5 +1,6 @@
-import React from "react";
-import {Container, Stack} from "@mui/material";
+import React from "react"
+import { Container, Stack } from "@mui/material"
+
 
 export default function Footer() {
   return (
@@ -9,7 +10,7 @@ export default function Footer() {
           direction="row"
           justifyContent="center"
           alignItems="center"
-          spacing={2}
+          spacing={ 2 }
         >
           <p>Hieu Tran</p>
         </Stack>

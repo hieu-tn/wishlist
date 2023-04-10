@@ -1,6 +1,6 @@
 import React from "react"
 import { Container, Grid, Stack } from "@mui/material"
-import "styles/routes/home.scss"
+import "styles/modules/home/home.route.scss"
 
 import SearchForm from "modules/home/components/Search.form"
 

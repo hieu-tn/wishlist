@@ -1,28 +1,29 @@
-import {IconButton, Link} from "@mui/material"
+import { IconButton, Link } from "@mui/material"
 import styles from "styles/components/common/product-item.module.scss"
 
-import MapsUgcTwoToneIcon from '@mui/icons-material/MapsUgcTwoTone'
-import {ProductItemProps} from "models/product-item.models"
+import MapsUgcTwoToneIcon from "@mui/icons-material/MapsUgcTwoTone"
+import { ProductItemProps } from "modules/home/models/product-item.models"
+
 
 export default function ProductItemComponent({data}: ProductItemProps) {
   return (
-    <div className={styles.productItem}>
-      <div className={styles.image}>
+    <div className={ styles.productItem }>
+      <div className={ styles.image }>
         <img
-          src={`${data.imageUrl}`}
-          srcSet={`${data.imageUrl}`}
-          alt={data.name}
+          src={ `${ data.imageUrl }` }
+          srcSet={ `${ data.imageUrl }` }
+          alt={ data.name }
           loading="lazy"
         />
         <IconButton aria-label="add">
-          <MapsUgcTwoToneIcon />
+          <MapsUgcTwoToneIcon/>
         </IconButton>
       </div>
-      <div className={styles.content}>
-        <p><Link href={data.url} underline="hover" target="_blank">{data.name}</Link></p>
-        <p>{data.description}</p>
-        <p>{data.regularPrice}</p>
-        <p>{data.provider}</p>
+      <div className={ styles.content }>
+        <p><Link href={ data.url } underline="hover" target="_blank">{ data.name }</Link></p>
+        <p>{ data.description }</p>
+        <p>{ data.regularPrice }</p>
+        <p>{ data.provider }</p>
       </div>
     </div>
   )
