@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit"
 
 import crawlerReducer from "store/crawler/crawlerSlice"
 
+
 const store = configureStore({
   reducer: {
     crawler: crawlerReducer,

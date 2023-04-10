@@ -1,26 +1,37 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { ActionReducerMapBuilder, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
-import { CRAWLER_STORE } from "constants/store"
+import { CRAWLER_STORE, StoreStatus } from "constants/store"
+import { AsyncThunkConfig } from "../../app/models"
+import { extraStatusReducers } from "../../app/actions"
 import { ICrawlerState, ISetKeywordAction } from "./crawlerModels"
 
+
+export const setKeyword = createAsyncThunk<string, string, AsyncThunkConfig>(
+  CRAWLER_STORE + "/setKeyword",
+  async (keyword: string, thunkAPI: AsyncThunkConfig) => {
+    return keyword
+  },
+)
 
 const initialState: ICrawlerState = {
   keyword: "",
   matches: [],
+  ids: [],
+  status: StoreStatus.IDLE,
+  error: null,
 }
 
 export const crawlerSlice = createSlice({
   name: CRAWLER_STORE,
   initialState,
-  reducers: {
-    setKeyword: (state, action: ISetKeywordAction) => {
-      return {
-        ...state,
-        keyword: action.payload,
-      }
-    },
+  reducers: {},
+  extraReducers: (builder: ActionReducerMapBuilder<ICrawlerState>) => {
+    builder.addCase(setKeyword.fulfilled, (state: ICrawlerState, action: ISetKeywordAction) => {
+      state.keyword = action.payload
+    })
+    extraStatusReducers(builder)
   },
 })
 
-export const {setKeyword} = crawlerSlice.actions
+export const {} = crawlerSlice.actions
 export default crawlerSlice.reducer
