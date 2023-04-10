@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 import { CRAWLER_STORE } from "constants/store"
-import { ICrawlerState } from "./crawlerModels"
+import { ICrawlerState, ISetKeywordAction } from "./crawlerModels"
 
 
 const initialState: ICrawlerState = {
@@ -12,8 +12,15 @@ const initialState: ICrawlerState = {
 export const crawlerSlice = createSlice({
   name: CRAWLER_STORE,
   initialState,
-  reducers: {},
+  reducers: {
+    setKeyword: (state, action: ISetKeywordAction) => {
+      return {
+        ...state,
+        keyword: action.payload,
+      }
+    },
+  },
 })
 
-export const {} = crawlerSlice.actions
+export const {setKeyword} = crawlerSlice.actions
 export default crawlerSlice.reducer

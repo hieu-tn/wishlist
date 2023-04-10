@@ -7,7 +7,8 @@ export interface ICrawlerState {
   matches: Array<IMatch>
 }
 
-// export interface ISetKeywordAction extends PayloadAction<string> {}
+export interface ISetKeywordAction extends PayloadAction<string> {
+}
 
 // export interface IMatch extends IProductItem {}
 export interface IMatch {
