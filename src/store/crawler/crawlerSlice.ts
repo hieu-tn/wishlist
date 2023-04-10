@@ -1,8 +1,8 @@
 import { ActionReducerMapBuilder, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
 import { CRAWLER_STORE, StoreStatus } from "constants/store"
-import { AsyncThunkConfig } from "../../app/models"
-import { extraStatusReducers } from "../../app/actions"
+import { AsyncThunkConfig } from "../models"
+import { extraStatusReducers } from "../actions"
 import { ICrawlerState, ISetKeywordAction } from "./crawlerModels"
 
 

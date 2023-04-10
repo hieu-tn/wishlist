@@ -1,6 +1,6 @@
 import { PayloadAction } from "@reduxjs/toolkit"
 
-import { IState } from "../../app/models"
+import { IState } from "../models"
 import { IProductItem } from "modules/home/models/product-item.models"
 
 
