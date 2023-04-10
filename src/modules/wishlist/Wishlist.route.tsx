@@ -1,4 +1,5 @@
-// import 'styles/wishlist.scss'
+import "styles/modules/wishlist/wishlist.route.scss"
+
 
 export default function WishlistRoute() {
   return (

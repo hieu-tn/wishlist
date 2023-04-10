@@ -2,10 +2,10 @@ import React, {useState} from "react"
 import {Box, Button, Stack, TextField} from '@mui/material'
 import {useDispatch} from 'react-redux'
 
-import * as crawlerActions from 'store/crawler/reducer'
+// import * as crawlerActions from 'store/crawler/reducer'
 
 export default function SearchForm() {
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
   const [keyword, setKeyword] = useState('')
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -16,7 +16,7 @@ export default function SearchForm() {
     e.preventDefault()
     if (keyword.length <= 2) return
 
-    dispatch(crawlerActions.setKeyword(keyword))
+    // dispatch(crawlerActions.setKeyword(keyword))
   }
 
   return (

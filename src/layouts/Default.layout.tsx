@@ -1,8 +1,8 @@
 import React from "react"
 import { Outlet, useNavigation } from "react-router-dom"
 
-import Header from "components/includes/header"
-import Footer from "components/includes/footer"
+import Header from "components/includes/Header"
+import Footer from "components/includes/Footer"
 
 
 export default function DefaultLayout() {
