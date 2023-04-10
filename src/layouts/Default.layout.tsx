@@ -1,9 +1,9 @@
 import React from "react"
-import {Outlet, useNavigation} from "react-router-dom"
+import { Outlet, useNavigation } from "react-router-dom"
 
+import Header from "components/includes/header"
+import Footer from "components/includes/footer"
 
-import Header from "../components/includes/header"
-import Footer from "../components/includes/footer"
 
 export default function DefaultLayout() {
   const navigation = useNavigation()
@@ -14,7 +14,7 @@ export default function DefaultLayout() {
 
       <main
         className={
-          navigation.state === 'loading' ? 'loading' : ''
+          navigation.state === "loading" ? "loading" : ""
         }
       >
         <Outlet/>

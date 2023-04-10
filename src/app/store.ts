@@ -1,15 +1,14 @@
-import {combineReducers, configureStore} from "@reduxjs/toolkit"
+import {configureStore} from "@reduxjs/toolkit"
 
 import crawlerReducer from "./crawler/reducer"
 
-const rootReducer = combineReducers({
-  crawler: crawlerReducer
-})
-
 const store = configureStore({
-  reducer: rootReducer
+  reducer: {
+    crawler: crawlerReducer,
+  }
 })
 
 export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
 
 export default store
