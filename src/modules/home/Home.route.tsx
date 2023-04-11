@@ -6,7 +6,7 @@ import SearchForm from "modules/home/components/Search.form"
 
 
 export default function HomeRoute() {
-
+  
   return (
     <>
       <Container>

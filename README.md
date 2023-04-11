@@ -10,7 +10,7 @@ An online store of grocery
 
 - [x] Install & configure create-react-app
 - study service-worker.ts
-- create .env for local and production
+- ~~create .env for local and production~~
 
 - [x] Install and configure redux-toolkit
 - createAsyncThunk
