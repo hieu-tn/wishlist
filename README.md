@@ -37,6 +37,6 @@ An online store of grocery
 
 - [ ] UI product item on homepage
 
-- [ ] fake json file from server
+- [x] fake json file from server
 
 - [ ] create loading animation
