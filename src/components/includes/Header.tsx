@@ -4,6 +4,8 @@ import styles from "styles/components/includes/header.module.scss"
 
 import { Button, Container, Divider, Stack } from "@mui/material"
 import { IMenuItem } from "models/includes/header.models"
+import { useAppDispatch, useAppSelector } from "../../store/hooks"
+import { increaseCounter } from "store/counter/counterSlice"
 
 
 export default function Header() {
@@ -12,8 +14,16 @@ export default function Header() {
     {to: "/wishlist", text: "Wishlist"},
   ]
 
+  // @todo debug
+  const counter = useAppSelector(state => state.counter.value)
+  const dispatch = useAppDispatch()
+  const handleOnClickEvent = () => {
+    dispatch(increaseCounter(null))
+  }
+
   return (
     <header className={ styles.header }>
+      <button onClick={handleOnClickEvent}>{ counter }</button>
       <Container>
         <nav>
           <Stack

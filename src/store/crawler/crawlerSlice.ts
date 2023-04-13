@@ -1,23 +1,13 @@
-import {
-  ActionReducerMapBuilder,
-  createAsyncThunk,
-  createEntityAdapter,
-  createSelector,
-  createSlice,
-} from "@reduxjs/toolkit"
+import { ActionReducerMapBuilder, createAsyncThunk, createEntityAdapter, createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
 import { parseError } from "../../utils/exceptions"
 
 import { CRAWLER_STORE, StoreStatus } from "constants/store"
+import { RootState } from "../store"
+import { useAppDispatch } from "../hooks"
 import { AsyncThunkConfig } from "../models"
 import { extraStatusReducers } from "../actions"
-import {
-  ICrawlerState,
-  IFetchProvidersAction, IMatch,
-  IProvider,
-  ISetKeywordAction,
-} from "./crawlerModels"
-import { RootState } from "../store"
+import { ICrawlerState, IFetchProvidersAction, IMatch, IProvider, ISetKeywordAction } from "./crawlerModels"
 
 
 const providersAdapter = createEntityAdapter<IProvider>({
@@ -35,6 +25,7 @@ const matchesInitialState = matchesAdapter.getInitialState()
 export const setKeyword = createAsyncThunk<string, string, AsyncThunkConfig>(
   CRAWLER_STORE + "/setKeyword",
   async (keyword: string, thunkApi: AsyncThunkConfig) => {
+    // useAppDispatch
     return keyword
   },
 )
@@ -70,7 +61,6 @@ export const crawlerSlice = createSlice({
       state.keyword = action.payload
     })
     builder.addCase(fetchProviders.fulfilled, (state: ICrawlerState, action: IFetchProvidersAction) => {
-      console.log(0)
       providersAdapter.setAll(state.providers, action.payload)
     })
     extraStatusReducers(builder)
