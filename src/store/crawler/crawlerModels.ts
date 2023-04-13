@@ -7,10 +7,7 @@ import { IProductItem } from "modules/home/models/product-item.models"
 export interface ICrawlerState extends IState {
   keyword: string
   providers: EntityState<IProvider>
-  matches: {
-    ids: string[]
-    entities: Array<IMatch>
-  }
+  matches: EntityState<IMatch>
 }
 
 export interface ISetKeywordAction extends PayloadAction<string> {
@@ -18,6 +15,7 @@ export interface ISetKeywordAction extends PayloadAction<string> {
 
 // export interface IMatch extends IProductItem {}
 export interface IMatch {
+  id: string
 }
 
 export interface IProvider {
@@ -26,6 +24,4 @@ export interface IProvider {
   code: string
 }
 
-export interface IFetchProvidersAction extends PayloadAction<Array<IProvider>> {
-  
-}
+export interface IFetchProvidersAction extends PayloadAction<Array<IProvider>> {}
