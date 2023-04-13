@@ -1,12 +1,15 @@
 import React from "react"
 import { Container, Grid, Stack } from "@mui/material"
 import "styles/modules/home/home.route.scss"
+import { useAppDispatch } from "../../store/hooks"
 
 import SearchForm from "modules/home/components/Search.form"
+import { fetchProviders } from "../../store/crawler/crawlerSlice"
 
 
 export default function HomeRoute() {
-  
+  const dispatch = useAppDispatch()
+  dispatch(fetchProviders())
   return (
     <>
       <Container>

@@ -1,13 +1,16 @@
 [
   {
+    "id": 1,
     "name": "Walmart",
     "code": "WALMART"
   },
   {
+    "id": 2,
     "name": "Canadian Superstore",
     "code": "CANADIAN_SUPERSTORE"
   },
   {
+    "id": 3,
     "name": "Calgary Coop",
     "code": "CALGARY_COOP"
   }

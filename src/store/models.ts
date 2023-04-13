@@ -1,5 +1,6 @@
 import { Dispatch } from "@reduxjs/toolkit"
 import { StoreStatus } from "../constants/store"
+import { RootState } from "./store"
 
 
 export interface IState {
@@ -14,13 +15,13 @@ export interface IStateError {
 
 export type AsyncThunkConfig = {
   /** return type for `thunkApi.getState` */
-  state?: unknown
+  state?: RootState
   /** type for `thunkApi.dispatch` */
   dispatch?: Dispatch
   /** type of the `extra` argument for the thunk middleware, which will be passed in as `thunkApi.extra` */
   extra?: unknown
   /** type to be passed into `rejectWithValue`'s first argument that will end up on `rejectedAction.payload` */
-  rejectValue?: unknown
+  rejectValue?: any
   /** return type of the `serializeError` option callback */
   serializedErrorType?: unknown
   /** type to be returned from the `getPendingMeta` option callback & merged into `pendingAction.meta` */

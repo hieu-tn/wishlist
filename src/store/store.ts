@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit"
 
-import crawlerReducer from "store/crawler/crawlerSlice"
+import crawlerReducer from "./crawler/crawlerSlice"
+import serverApi from "./api/serverApi"
 
 
 const store = configureStore({
   reducer: {
+    [serverApi.reducerPath]: serverApi.reducer,
     crawler: crawlerReducer,
   },
 })
