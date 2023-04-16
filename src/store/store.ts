@@ -12,6 +12,9 @@ const store = configureStore({
     // @todo debug
     counter: counterReducer,
   },
+  middleware: getDefaultMiddleware => {
+    return getDefaultMiddleware().concat(serverApi.middleware)
+  }
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

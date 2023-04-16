@@ -1,7 +1,7 @@
 import { EntityState, PayloadAction } from "@reduxjs/toolkit"
 
 import { IState } from "../models"
-import { IProductItem } from "modules/home/models/productItem.model"
+import { PROVIDERS } from "../../constants/providers"
 
 
 export interface ICrawlerState extends IState {
@@ -18,11 +18,14 @@ export interface IProvider {
   code: string
 }
 
-export interface IFetchProvidersAction extends PayloadAction<Array<IProvider>> {}
+export interface ISetProvidersAction extends PayloadAction<Array<IProvider>> {}
 
-// export interface IMatch extends IProductItem {}
 export interface IMatch {
   id: string
+  name: string,
+  description?: string,
+  regularPrice: string,
+  provider: PROVIDERS
 }
 
-export interface IFetchMatchedProducts extends PayloadAction<Array<IMatch>> {}
+export interface ISetMatchesAction extends PayloadAction<Array<IMatch>> {}

@@ -1,12 +1,11 @@
 import { ActionReducerMapBuilder, createAsyncThunk, createEntityAdapter, createSlice } from "@reduxjs/toolkit"
-import axios from "axios"
 
-import { parseError } from "../../utils/exceptions"
 import { CRAWLER_STORE, StoreStatus } from "constants/store"
 import { RootState } from "../store"
 import { AsyncThunkConfig } from "../models"
 import { extraStatusReducers } from "../actions"
-import { ICrawlerState, IFetchMatchedProducts, IFetchProvidersAction, IMatch, IProvider, ISetKeywordAction } from "./crawlerModels"
+import serverApi from "../api/serverApi"
+import { ICrawlerState, IMatch, IProvider, ISetKeywordAction, ISetMatchesAction, ISetProvidersAction } from "./crawlerModels"
 
 
 const providersAdapter = createEntityAdapter<IProvider>({
@@ -21,33 +20,43 @@ const matchesAdapter = createEntityAdapter<IMatch>({
 })
 const matchesInitialState = matchesAdapter.getInitialState()
 
-export const fetchProviders = createAsyncThunk<Array<IProvider>, undefined, AsyncThunkConfig>(
-  CRAWLER_STORE + "/getProviders",
-  async (_, thunkApi) => {
-    try {
-      // @todo switch to createApi
-      const response = await axios.get(`${ process.env.REACT_APP_SERVER_URL }/get-providers.json`)
-      const data = response.data
-      return data
-    } catch (e) {
-      return thunkApi.rejectWithValue(parseError(e))
-    }
-  },
-)
+export const crawlerExtendedServerApi = serverApi.injectEndpoints({
+  endpoints: builder => ({
+    getProviders: builder.query<Array<IProvider>, any>({
+      query: () => "/get-providers.json",
+      async onQueryStarted(_, {dispatch, getState, extra, requestId, queryFulfilled, getCacheEntry, updateCachedData}) {
+        const {data} = await queryFulfilled
+        dispatch(setProviders(data))
+      },
+      providesTags: (result, error, arg) => {
+        return result ?
+          [...result.map(({id}) => ({type: "Provider" as const, id})), {type: "Provider", id: "LIST"}]
+          :
+          [{type: "Provider", id: "LIST"}]
+      },
+    }),
+    getMatches: builder.query<Array<IMatch>, string>({
+      query: keyword => `/get-matched-products.json?keyword=${ keyword }`,
+      async onQueryStarted(_, {dispatch, getState, extra, requestId, queryFulfilled, getCacheEntry, updateCachedData}) {
+        const {data} = await queryFulfilled
+        dispatch(setMatches(data))
+      },
+      providesTags: (result, error, arg) => {
+        return result ?
+          [...result.map(({id}) => ({type: "Match" as const, id})), {type: "Match", id: "LIST"}]
+          :
+          [{type: "Match", id: "LIST"}]
+      },
+    }),
+  }),
+})
 
 export const setKeyword = createAsyncThunk<string, string, AsyncThunkConfig>(
   CRAWLER_STORE + "/setKeyword",
   async (keyword, thunkApi) => {
-    thunkApi.dispatch(fetchMatchedProducts(keyword))
+    thunkApi.dispatch(crawlerExtendedServerApi.endpoints.getMatches.initiate(keyword))
     return keyword
   },
-)
-
-export const fetchMatchedProducts = createAsyncThunk<Array<IMatch>, string, AsyncThunkConfig>(
-  CRAWLER_STORE + "/getMatchedProducts",
-  async (keyword, thunkApi) => {
-    return []
-  }
 )
 
 const initialState: ICrawlerState = {
@@ -61,27 +70,40 @@ const initialState: ICrawlerState = {
 export const crawlerSlice = createSlice({
   name: CRAWLER_STORE,
   initialState,
-  reducers: {},
+  reducers: {
+    setProviders(state: ICrawlerState, action: ISetProvidersAction) {
+      providersAdapter.setAll(state.providers, action.payload)
+    },
+    setMatches(state: ICrawlerState, action: ISetMatchesAction) {
+      matchesAdapter.upsertMany(state.matches, action.payload)
+    },
+  },
   extraReducers: (builder: ActionReducerMapBuilder<ICrawlerState>) => {
     builder.addCase(setKeyword.fulfilled, (state: ICrawlerState, action: ISetKeywordAction) => {
       state.keyword = action.payload
-    })
-    builder.addCase(fetchProviders.fulfilled, (state: ICrawlerState, action: IFetchProvidersAction) => {
-      providersAdapter.setAll(state.providers, action.payload)
-    })
-    builder.addCase(fetchMatchedProducts.fulfilled, (state: ICrawlerState, action: IFetchMatchedProducts) => {
-      matchesAdapter.upsertMany(state.matches, action.payload)
     })
     extraStatusReducers(builder)
   },
 })
 
-//getSelectors creates these selectors and we rename them with aliases using destructuring
+//getSelectors creates these selectors and rename them with aliases using destructuring
 export const {
   selectAll: selectAllProviders,
   selectById: selectProviderById,
   selectIds: selectProviderIds,
 } = providersAdapter.getSelectors((state: RootState) => state.crawler.providers)
 
-export const {} = crawlerSlice.actions
+//getSelectors creates these selectors and rename them with aliases using destructuring
+export const {
+  selectAll: selectAllMatches,
+  selectById: selectMatchById,
+  selectIds: selectMatchIds,
+} = matchesAdapter.getSelectors((state: RootState) => state.crawler.matches)
+
+export const {
+  useGetProvidersQuery,
+  useGetMatchesQuery,
+} = crawlerExtendedServerApi
+
+export const {setProviders, setMatches} = crawlerSlice.actions
 export default crawlerSlice.reducer

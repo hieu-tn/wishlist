@@ -45,7 +45,6 @@ export default function SearchForm() {
           onChange={ handleOnChange }/>
         <Button variant="contained" type="submit" size="large">Submit</Button>
       </Stack>
-      {/*<iframe id="if" src="https://google.com"></iframe>*/}
     </Box>
   )
 }

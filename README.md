@@ -13,15 +13,15 @@ An online store of grocery
 - ~~create .env for local and production~~
 
 - [x] Install and configure redux-toolkit
-- createAsyncThunk
-- createApi
-- createEntityApdapter
+- ~~createAsyncThunk~~
+- ~~createApi~~
+- ~~createEntityApdapter~~
 
 - [ ] action CLEAR
 
 - [ ] store crawler
 - ~~setKeyword~~
-- crawl products
+- ~~crawl products~~
 
 - [ ] Install and configure MUI
 - enhance UI
@@ -30,13 +30,15 @@ An online store of grocery
 - [ ] Create shared MUI component
 
 - [ ] Crawl products by keyword
-- interface
-- Walmart
-- Canadian Superstore
-- Calgary Coop
+- interface (do not implement)
+- Walmart (do not implement)
+- Canadian Superstore (do not implement)
+- Calgary Coop (do not implement)
 
 - [ ] UI product item on homepage
 
 - [x] fake json file from server
 
 - [ ] create loading animation
+
+- [ ] persist store

@@ -1,0 +1,30 @@
+[
+  {
+    "id": "1",
+    "name": "Milk 1",
+    "description": "desc milk 1",
+    "regularPrice": "$100",
+    "provider": "WALMART"
+  },
+  {
+    "id": "2",
+    "name": "Milk 2",
+    "description": "desc milk 2",
+    "regularPrice": "$200",
+    "provider": "CANADIAN_SUPERSTORE"
+  },
+  {
+    "id": "3",
+    "name": "Milk 3",
+    "description": "desc milk 3",
+    "regularPrice": "$300",
+    "provider": "WALMART"
+  },
+  {
+    "id": "4",
+    "name": "Milk 4",
+    "description": "desc milk 4",
+    "regularPrice": "$400",
+    "provider": "CALGARY_COOP"
+  }
+]

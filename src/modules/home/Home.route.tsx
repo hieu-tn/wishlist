@@ -4,14 +4,14 @@ import "styles/modules/home/home.route.scss"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
 
 import SearchForm from "modules/home/components/Search.form"
-import { fetchProviders, selectAllProviders } from "../../store/crawler/crawlerSlice"
+import { selectAllMatches, selectAllProviders, useGetProvidersQuery } from "../../store/crawler/crawlerSlice"
 
 
 export default function HomeRoute() {
-  const dispatch = useAppDispatch()
-  useEffect(() => {
-    dispatch(fetchProviders())
-  }, [dispatch])
+  useGetProvidersQuery(null)
+
+  const f = useAppSelector(selectAllMatches)
+  console.log(f)
 
   return (
     <>
