@@ -2,7 +2,7 @@ import { IconButton, Link } from "@mui/material"
 import styles from "styles/components/common/product-item.module.scss"
 
 import MapsUgcTwoToneIcon from "@mui/icons-material/MapsUgcTwoTone"
-import { ProductItemProps } from "modules/home/models/product-item.models"
+import { ProductItemProps } from "modules/home/models/productItem.model"
 
 
 export default function ProductItemComponent({data}: ProductItemProps) {

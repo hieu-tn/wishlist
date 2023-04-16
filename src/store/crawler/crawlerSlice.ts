@@ -1,13 +1,12 @@
 import { ActionReducerMapBuilder, createAsyncThunk, createEntityAdapter, createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
-import { parseError } from "../../utils/exceptions"
 
+import { parseError } from "../../utils/exceptions"
 import { CRAWLER_STORE, StoreStatus } from "constants/store"
 import { RootState } from "../store"
-import { useAppDispatch } from "../hooks"
 import { AsyncThunkConfig } from "../models"
 import { extraStatusReducers } from "../actions"
-import { ICrawlerState, IFetchProvidersAction, IMatch, IProvider, ISetKeywordAction } from "./crawlerModels"
+import { ICrawlerState, IFetchMatchedProducts, IFetchProvidersAction, IMatch, IProvider, ISetKeywordAction } from "./crawlerModels"
 
 
 const providersAdapter = createEntityAdapter<IProvider>({
@@ -22,14 +21,6 @@ const matchesAdapter = createEntityAdapter<IMatch>({
 })
 const matchesInitialState = matchesAdapter.getInitialState()
 
-export const setKeyword = createAsyncThunk<string, string, AsyncThunkConfig>(
-  CRAWLER_STORE + "/setKeyword",
-  async (keyword: string, thunkApi: AsyncThunkConfig) => {
-    // useAppDispatch
-    return keyword
-  },
-)
-
 export const fetchProviders = createAsyncThunk<Array<IProvider>, undefined, AsyncThunkConfig>(
   CRAWLER_STORE + "/getProviders",
   async (_, thunkApi) => {
@@ -42,6 +33,21 @@ export const fetchProviders = createAsyncThunk<Array<IProvider>, undefined, Asyn
       return thunkApi.rejectWithValue(parseError(e))
     }
   },
+)
+
+export const setKeyword = createAsyncThunk<string, string, AsyncThunkConfig>(
+  CRAWLER_STORE + "/setKeyword",
+  async (keyword, thunkApi) => {
+    thunkApi.dispatch(fetchMatchedProducts(keyword))
+    return keyword
+  },
+)
+
+export const fetchMatchedProducts = createAsyncThunk<Array<IMatch>, string, AsyncThunkConfig>(
+  CRAWLER_STORE + "/getMatchedProducts",
+  async (keyword, thunkApi) => {
+    return []
+  }
 )
 
 const initialState: ICrawlerState = {
@@ -62,6 +68,9 @@ export const crawlerSlice = createSlice({
     })
     builder.addCase(fetchProviders.fulfilled, (state: ICrawlerState, action: IFetchProvidersAction) => {
       providersAdapter.setAll(state.providers, action.payload)
+    })
+    builder.addCase(fetchMatchedProducts.fulfilled, (state: ICrawlerState, action: IFetchMatchedProducts) => {
+      matchesAdapter.upsertMany(state.matches, action.payload)
     })
     extraStatusReducers(builder)
   },

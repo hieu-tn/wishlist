@@ -13,9 +13,6 @@ export default function HomeRoute() {
     dispatch(fetchProviders())
   }, [dispatch])
 
-  let f = useAppSelector(selectAllProviders)
-  console.log(f)
-
   return (
     <>
       <Container>

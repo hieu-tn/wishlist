@@ -7,7 +7,7 @@ import * as crawlerActions from "store/crawler/crawlerSlice"
 
 export default function SearchForm() {
   const dispatch = useAppDispatch()
-  const [keyword, setKeyword] = useState("")
+  const [keyword, setKeyword] = useState("milk")
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value)
@@ -19,6 +19,8 @@ export default function SearchForm() {
 
     dispatch(crawlerActions.setKeyword(keyword))
   }
+
+
 
   return (
     <Box
@@ -43,6 +45,7 @@ export default function SearchForm() {
           onChange={ handleOnChange }/>
         <Button variant="contained" type="submit" size="large">Submit</Button>
       </Stack>
+      {/*<iframe id="if" src="https://google.com"></iframe>*/}
     </Box>
   )
 }
