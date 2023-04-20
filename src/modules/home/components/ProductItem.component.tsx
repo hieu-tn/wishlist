@@ -1,11 +1,12 @@
 import { IconButton, Link } from "@mui/material"
-import styles from "styles/components/common/product-item.module.scss"
+import styles from "styles/modules/home/components/product-item.module.scss"
 
 import MapsUgcTwoToneIcon from "@mui/icons-material/MapsUgcTwoTone"
-import { ProductItemProps } from "modules/home/models/productItem.model"
+import { ProductItemProps } from "modules/home/models/product.model"
 
 
 export default function ProductItemComponent({data}: ProductItemProps) {
+  console.log(data)
   return (
     <div className={ styles.productItem }>
       <div className={ styles.image }>

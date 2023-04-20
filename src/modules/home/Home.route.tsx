@@ -1,18 +1,12 @@
-import React, { useEffect } from "react"
-import { Container, Grid, Stack } from "@mui/material"
+import React from "react"
+import { Container } from "@mui/material"
 import "styles/modules/home/home.route.scss"
-import { useAppDispatch, useAppSelector } from "../../store/hooks"
 
 import SearchForm from "modules/home/components/Search.form"
-import { selectAllMatches, selectAllProviders, useGetProvidersQuery } from "../../store/crawler/crawlerSlice"
+import ProductListComponent from "./components/ProductList.component"
 
 
 export default function HomeRoute() {
-  useGetProvidersQuery(null)
-
-  const f = useAppSelector(selectAllMatches)
-  console.log(f)
-
   return (
     <>
       <Container>
@@ -21,13 +15,7 @@ export default function HomeRoute() {
 
       <section className="results">
         <Container>
-          <Grid container columnSpacing={ 2 }>
-            {/*{products && products.map(p => (*/ }
-            {/*  <Grid xs={3} item={true} key={p.name}>*/ }
-            {/*    <ProductItemComponent data={p}/>*/ }
-            {/*  </Grid>*/ }
-            {/*))}*/ }
-          </Grid>
+          <ProductListComponent/>
         </Container>
       </section>
     </>

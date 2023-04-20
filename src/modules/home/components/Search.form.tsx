@@ -3,9 +3,12 @@ import { Box, Button, Stack, TextField } from "@mui/material"
 
 import { useAppDispatch } from "store/hooks"
 import * as crawlerActions from "store/crawler/crawlerSlice"
+import { useGetProvidersQuery } from "store/crawler/crawlerSlice"
 
 
 export default function SearchForm() {
+  useGetProvidersQuery(null)
+
   const dispatch = useAppDispatch()
   const [keyword, setKeyword] = useState("milk")
 

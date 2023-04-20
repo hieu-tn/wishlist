@@ -75,7 +75,7 @@ export const crawlerSlice = createSlice({
       providersAdapter.setAll(state.providers, action.payload)
     },
     setMatches(state: ICrawlerState, action: ISetMatchesAction) {
-      matchesAdapter.upsertMany(state.matches, action.payload)
+      matchesAdapter.setAll(state.matches, action.payload)
     },
   },
   extraReducers: (builder: ActionReducerMapBuilder<ICrawlerState>) => {
@@ -88,16 +88,20 @@ export const crawlerSlice = createSlice({
 
 //getSelectors creates these selectors and rename them with aliases using destructuring
 export const {
-  selectAll: selectAllProviders,
-  selectById: selectProviderById,
   selectIds: selectProviderIds,
+  selectEntities: selectProviderEntities,
+  selectAll: selectAllProviders,
+  selectTotal: selectTotalProviders,
+  selectById: selectProviderById,
 } = providersAdapter.getSelectors((state: RootState) => state.crawler.providers)
 
 //getSelectors creates these selectors and rename them with aliases using destructuring
 export const {
-  selectAll: selectAllMatches,
-  selectById: selectMatchById,
   selectIds: selectMatchIds,
+  selectEntities: selectMatchEntities,
+  selectAll: selectAllMatches,
+  selectTotal: selectTotalMatches,
+  selectById: selectMatchById,
 } = matchesAdapter.getSelectors((state: RootState) => state.crawler.matches)
 
 export const {

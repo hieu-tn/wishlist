@@ -22,9 +22,11 @@ export interface ISetProvidersAction extends PayloadAction<Array<IProvider>> {}
 
 export interface IMatch {
   id: string
-  name: string,
-  description?: string,
-  regularPrice: string,
+  name: string
+  imageUrl: string
+  url: string
+  description?: string
+  regularPrice: string
   provider: PROVIDERS
 }
 
