@@ -34,5 +34,14 @@
     "description": "desc milk 4",
     "regularPrice": "$400",
     "provider": "CALGARY_COOP"
+  },
+  {
+    "id": "5",
+    "name": "Milk 5",
+    "imageUrl": "https://i5.walmartimages.com/asr/0b180cd3-d996-45a3-a5f8-bdea0b101ac7.76b71de6b8bcd11baf342cd6111de6aa.jpeg",
+    "url": "https://www.walmart.ca/en/ip/Dairyland-3-25-milk/6000075688890",
+    "description": "desc milk 5",
+    "regularPrice": "$500",
+    "provider": "WALMART"
   }
 ]

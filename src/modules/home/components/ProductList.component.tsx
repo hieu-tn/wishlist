@@ -1,6 +1,7 @@
+import React from "react"
 import { useAppSelector } from "../../../store/hooks"
 import { selectAllMatches } from "../../../store/crawler/crawlerSlice"
-import { Grid } from "@mui/material"
+import { Box, Grid } from "@mui/material"
 import ProductItemComponent from "./ProductItem.component"
 
 
@@ -8,14 +9,14 @@ export default function ProductListComponent() {
   const products = useAppSelector(selectAllMatches)
 
   return (
-    <>
-      <Grid container rowSpacing={ 1 } columnSpacing={ 2 }>
+    <Box sx={ {flexGrow: 1} }>
+      <Grid container>
         { products && products.map(p => (
-          <Grid xs={ 3 }>
+          <Grid item xs={ 3 } key={ p.id }>
             <ProductItemComponent data={ p }/>
           </Grid>
         )) }
       </Grid>
-    </>
+    </Box>
   )
 }

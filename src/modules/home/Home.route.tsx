@@ -1,5 +1,5 @@
 import React from "react"
-import { Container } from "@mui/material"
+import { Container, Grid } from "@mui/material"
 import "styles/modules/home/home.route.scss"
 
 import SearchForm from "modules/home/components/Search.form"
@@ -10,7 +10,11 @@ export default function HomeRoute() {
   return (
     <>
       <Container>
-        <SearchForm/>
+        <Grid container justifyContent="center">
+          <Grid item xs={ 6 }>
+            <SearchForm/>
+          </Grid>
+        </Grid>
       </Container>
 
       <section className="results">

@@ -1,9 +1,37 @@
 .productItem {
-
+  padding: 10px;
 }
 
-.image {
+.productItemInner {
+  border: 1px solid gainsboro;
+  border-radius: 6px;
+  padding: 10px;
 
+  &:hover {
+    box-shadow: 0 0 5px 2px gainsboro;
+  }
 }
 
-.content{}
+.imageContainer {
+  position: relative;
+  text-align: center;
+  padding-bottom: 80%;
+
+  img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-height: 100%;
+  }
+
+  .btnAdd {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+}
+
+.content {
+}
