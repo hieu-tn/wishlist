@@ -1,4 +1,4 @@
-import { EntityState } from "@reduxjs/toolkit"
+import { EntityState, PayloadAction } from "@reduxjs/toolkit"
 
 import { IState } from "../models"
 import { IProductItem } from "../../modules/home/models/product.model"
@@ -11,3 +11,5 @@ export interface IWishlist {
   name: string
   items: EntityState<IProductItem>
 }
+
+export interface ISetWishlistsAction extends PayloadAction<Array<IWishlist>> {}

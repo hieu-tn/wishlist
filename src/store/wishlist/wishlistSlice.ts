@@ -2,7 +2,9 @@ import { ActionReducerMapBuilder, createEntityAdapter, createSlice } from "@redu
 
 import { extraStatusReducers } from "../actions"
 import { StoreStatus, WISHLIST_STORE } from "../../constants/store"
-import { IWishlist, IWishlistState } from "./wishlistModels"
+import { ISetWishlistsAction, IWishlist, IWishlistState } from "./wishlistModels"
+import serverApi from "../api/serverApi"
+import { RootState } from "../store"
 
 
 // ---------------- ADAPTERS ----------------
@@ -16,6 +18,18 @@ const wishlistsInitialState = wishlistsAdapter.getInitialState()
 // ------------------------------------------
 
 // ---------------- API ----------------
+
+const wishlistExtendedServerApi = serverApi.injectEndpoints({
+  endpoints: builder => ({
+    getWishlists: builder.query<Array<IWishlist>, any>({
+      query: () => "get-wishlists.json",
+      async onQueryStarted(_, {dispatch, getState, extra, requestId, queryFulfilled, getCacheEntry, updateCachedData}) {
+        const {data} = await queryFulfilled
+        dispatch(setWishlists(data))
+      },
+    }),
+  }),
+})
 // ------------------------------------------
 
 // ---------------- Thunk ----------------
@@ -32,7 +46,11 @@ const initialState: IWishlistState = {
 const wishlistSlice = createSlice({
   name: WISHLIST_STORE,
   initialState,
-  reducers: {},
+  reducers: {
+    setWishlists(state, action: ISetWishlistsAction) {
+      wishlistsAdapter.setAll(state, action.payload)
+    },
+  },
   extraReducers: (builder: ActionReducerMapBuilder<IWishlistState>) => {
     extraStatusReducers(builder)
   },
@@ -40,5 +58,17 @@ const wishlistSlice = createSlice({
 
 // ------------------------------------------
 
-export const {} = wishlistSlice.actions
+export const {
+  selectIds: selectWishlistIds,
+  selectEntities: selectWishlistEntities,
+  selectAll: selectAllWishlists,
+  selectTotal: selectTotalWishlists,
+  selectById: selectWishlistById,
+} = wishlistsAdapter.getSelectors((state: RootState) => state.wishlist)
+
+export const {
+  useGetWishlistsQuery,
+} = wishlistExtendedServerApi
+
+export const {setWishlists} = wishlistSlice.actions
 export default wishlistSlice.reducer

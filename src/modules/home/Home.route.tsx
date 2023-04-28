@@ -4,9 +4,14 @@ import "styles/modules/home/home.route.scss"
 
 import SearchForm from "modules/home/components/Search.form"
 import ProductListComponent from "./components/ProductList.component"
+import { useGetProvidersQuery } from "store/crawler/crawlerSlice"
+import { useGetWishlistsQuery } from "store/wishlist/wishlistSlice"
 
 
 export default function HomeRoute() {
+  useGetProvidersQuery(null)
+  useGetWishlistsQuery(null)
+
   return (
     <>
       <Container>
