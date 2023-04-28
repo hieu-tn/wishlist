@@ -1,8 +1,9 @@
-export const CRAWLER_STORE = 'crawler'
-
 export enum StoreStatus {
-  IDLE = 'IDLE',
-  LOADING = 'LOADING',
-  SUCCESS = 'SUCCESS',
-  ERROR = 'ERROR',
+  IDLE = "IDLE",
+  LOADING = "LOADING",
+  SUCCESS = "SUCCESS",
+  ERROR = "ERROR",
 }
+
+export const CRAWLER_STORE = "crawler"
+export const WISHLIST_STORE = "wishlist"

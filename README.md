@@ -35,10 +35,12 @@ An online store of grocery
 - Canadian Superstore (do not implement)
 - Calgary Coop (do not implement)
 
-- [ ] UI product item on homepage
+- [x] UI product item on homepage
 
 - [x] fake json file from server
 
 - [ ] create loading animation
 
 - [ ] persist store
+
+- [ ] store wishlist
