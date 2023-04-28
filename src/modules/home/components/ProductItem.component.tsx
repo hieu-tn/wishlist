@@ -1,11 +1,11 @@
 import { IconButton, Link } from "@mui/material"
 import styles from "styles/modules/home/components/product-item.module.scss"
-
 import AddCircleIcon from "@mui/icons-material/AddCircle"
+import RemoveCircleIcon from "@mui/icons-material/RemoveCircle"
+
 import { ProductItemProps } from "modules/home/models/product.model"
 import { useAppSelector } from "../../../store/hooks"
 import { selectAllProviders } from "store/crawler/crawlerSlice"
-import { MouseEventHandler, SyntheticEvent } from "react"
 
 
 export default function ProductItemComponent({data}: ProductItemProps) {
@@ -21,7 +21,7 @@ export default function ProductItemComponent({data}: ProductItemProps) {
   }
 
   const addProductToWishlist = (productId: string): void => {
-    console.log('click', productId)
+    console.log("click", productId)
   }
 
   return (
@@ -34,7 +34,10 @@ export default function ProductItemComponent({data}: ProductItemProps) {
             alt={ data.name }
             loading="lazy"
           />
-          <IconButton aria-label="add" className={ styles.btnAdd } onClick={() => addProductToWishlist(data.id)}>
+          <IconButton aria-label="remove" className={ styles.btnRemove } onClick={ () => addProductToWishlist(data.id) }>
+            <RemoveCircleIcon color="error" fontSize="large"/>
+          </IconButton>
+          <IconButton aria-label="add" className={ styles.btnAdd } onClick={ () => addProductToWishlist(data.id) }>
             <AddCircleIcon color="success" fontSize="large"/>
           </IconButton>
         </div>

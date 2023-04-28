@@ -9,6 +9,10 @@
 
   &:hover {
     box-shadow: 0 0 5px 2px gainsboro;
+
+    .imageContainer img {
+      transform: translate(-50%, -50%) scale(1.2);
+    }
   }
 }
 
@@ -16,6 +20,7 @@
   position: relative;
   text-align: center;
   padding-bottom: 80%;
+  overflow: hidden;
 
   img {
     position: absolute;
@@ -24,12 +29,19 @@
     transform: translate(-50%, -50%);
     width: 80%;
     max-height: 100%;
+    transition: transform 300ms ease-out;
   }
 
   .btnAdd {
     position: absolute;
     bottom: 0;
-    left: 0;
+    left: -10px;
+  }
+
+  .btnRemove {
+    position: absolute;
+    bottom: 40px;
+    left: -10px;
   }
 }
 

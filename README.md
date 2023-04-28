@@ -8,39 +8,21 @@ An online store of grocery
 
 ### Tasks
 
-- [x] Install & configure create-react-app
-- study service-worker.ts
-- ~~create .env for local and production~~
-
-- [x] Install and configure redux-toolkit
-- ~~createAsyncThunk~~
-- ~~createApi~~
-- ~~createEntityApdapter~~
-
+- [x] ~~Install & configure create-react-app~~
+- [ ] study service-worker.ts
+- [x] ~~Install and configure redux-toolkit~~
 - [ ] action CLEAR
-
-- [ ] store crawler
-- ~~setKeyword~~
-- ~~crawl products~~
-
-- [ ] Install and configure MUI
-- enhance UI
-- responsive
-
+- [x] ~~store crawler~~
+- [x] ~~Install and configure MUI~~
 - [ ] Create shared MUI component
-
-- [ ] Crawl products by keyword
-- interface (do not implement)
-- Walmart (do not implement)
-- Canadian Superstore (do not implement)
-- Calgary Coop (do not implement)
-
-- [x] UI product item on homepage
-
-- [x] fake json file from server
-
+- [ ] ~~Crawl products by keyword (do not implement)~~
+- [x] ~~UI product item on homepage~~
+- [x] ~~fake json file from server~~
 - [ ] create loading animation
-
 - [ ] persist store
-
-- [ ] store wishlist
+- [x] ~~store wishlist~~
+- [ ] enhance UI
+- [ ] responsive
+- [ ] toggle remove button if product in list
+- [ ] add product to wishlist
+- [ ] remove product from wishlist

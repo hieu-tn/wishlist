@@ -10,7 +10,7 @@ export const extraStatusReducers = (builder: ActionReducerMapBuilder<IState>) =>
     state.status = StoreStatus.LOADING
   })
   builder.addMatcher(action => action.type.endsWith("/fulfilled"), (state: IState, action: PayloadAction) => {
-    state.status = StoreStatus.IDLE
+    state.status = StoreStatus.SUCCESS
   })
   builder.addMatcher(action => action.type.endsWith("/rejected"), (state: IState, action: UnknownAsyncThunkRejectedAction) => {
     state.status = StoreStatus.ERROR
