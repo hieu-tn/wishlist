@@ -13,3 +13,5 @@ export interface IWishlist {
 }
 
 export interface ISetWishlistsAction extends PayloadAction<Array<IWishlist>> {}
+
+export interface ISetWishlistAction extends PayloadAction<IWishlist> {}

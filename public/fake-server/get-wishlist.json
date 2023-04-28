@@ -1,0 +1,15 @@
+{
+  "id": 1,
+  "name": "personal",
+  "items": [
+    {
+      "id": "1",
+      "name": "Milk 1",
+      "imageUrl": "https://i5.walmartimages.com/asr/56c0f88b-1d6c-4180-a2bb-3b3fc364136f.7f17ce082a974d1d14b7aa334e7e7332.jpeg",
+      "url": "https://www.walmart.ca/en/ip/Dairyland-2-Partly-Skimmed-Milk/6000075688886",
+      "description": "desc milk 1",
+      "regularPrice": "$100",
+      "provider": "WALMART"
+    }
+  ]
+}
