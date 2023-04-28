@@ -8,6 +8,8 @@ import serverApi from "../api/serverApi"
 import { ICrawlerState, IMatch, IProvider, ISetKeywordAction, ISetMatchesAction, ISetProvidersAction } from "./crawlerModels"
 
 
+// ---------------- ADAPTERS ----------------
+
 const providersAdapter = createEntityAdapter<IProvider>({
   selectId: provider => provider.id,
   sortComparer: (a, b) => a.code.localeCompare(b.code),
@@ -19,6 +21,10 @@ const matchesAdapter = createEntityAdapter<IMatch>({
   sortComparer: (a, b) => a.id.localeCompare(b.id),
 })
 const matchesInitialState = matchesAdapter.getInitialState()
+
+// ------------------------------------------
+
+// ---------------- API ----------------
 
 export const crawlerExtendedServerApi = serverApi.injectEndpoints({
   endpoints: builder => ({
@@ -51,6 +57,10 @@ export const crawlerExtendedServerApi = serverApi.injectEndpoints({
   }),
 })
 
+// ------------------------------------------
+
+// ---------------- Thunk ----------------
+
 export const setKeyword = createAsyncThunk<string, string, AsyncThunkConfig>(
   CRAWLER_STORE + "/setKeyword",
   async (keyword, thunkApi) => {
@@ -58,6 +68,10 @@ export const setKeyword = createAsyncThunk<string, string, AsyncThunkConfig>(
     return keyword
   },
 )
+
+// ------------------------------------------
+
+// ---------------- CRAWLER SLICE ----------------
 
 const initialState: ICrawlerState = {
   keyword: "",
@@ -85,6 +99,8 @@ export const crawlerSlice = createSlice({
     extraStatusReducers(builder)
   },
 })
+
+// ------------------------------------------
 
 //getSelectors creates these selectors and rename them with aliases using destructuring
 export const {
