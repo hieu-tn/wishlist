@@ -1,6 +1,7 @@
 [
   {
     "id": 1,
-    "name": "personal"
+    "name": "personal",
+    "products": []
   }
 ]

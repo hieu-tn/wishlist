@@ -7,6 +7,7 @@ import DefaultLayout from "layouts/Default.layout"
 import ErrorPage from "error-page"
 import HomeRoute from "modules/home/Home.route"
 import WishlistRoute from "modules/wishlist/Wishlist.route"
+import { createTheme, ThemeProvider } from "@mui/material"
 
 
 const router = createBrowserRouter([
@@ -27,10 +28,14 @@ const router = createBrowserRouter([
   },
 ])
 
+const theme = createTheme({})
+
 export default function App() {
   return (
     <Provider store={ store }>
-      <RouterProvider router={ router }/>
+      <ThemeProvider theme={ theme }>
+        <RouterProvider router={ router }/>
+      </ThemeProvider>
     </Provider>
   )
 }
