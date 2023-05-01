@@ -27,7 +27,7 @@ An online store of grocery
 - ~~add product to wishlist~~
 - ~~remove product from wishlist~~
 - fix bug add same product to wishlist
-- toast
+- ~~toast~~
 - display number of added products as a badge
 - wishlist page layout
 - remove product from wishlist page
@@ -35,3 +35,5 @@ An online store of grocery
 - send to store button: migrate products to stores by modifying localStorage values (investigate)
 - mui navigation to menu
 - tab/accordion to wishlists: future feature
+- only set store status if its action is triggered
+- style toast message

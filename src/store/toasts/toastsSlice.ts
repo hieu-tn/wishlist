@@ -1,7 +1,8 @@
-import { ActionReducerMapBuilder, createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { ActionReducerMapBuilder, createDraftSafeSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { TOASTS_STORE } from "../../constants/store"
 import { IActionLoading, IToastsState } from "./toastsModels"
 import { UnknownAsyncThunkRejectedAction } from "@reduxjs/toolkit/dist/matchers"
+import { RootState } from "../store"
 
 
 const getActionName = (action: string): string => {
@@ -27,13 +28,13 @@ const toasts = createSlice({
   initialState,
   reducers: {},
   extraReducers: ((builder: ActionReducerMapBuilder<IToastsState>) => {
-    builder.addMatcher(action => action.type.endsWith("/pending"), (state: IToastsState, action: PayloadAction) => {
+    builder.addMatcher(action => !action.type.startsWith("api") && action.type.endsWith("/pending"), (state: IToastsState, action: PayloadAction) => {
       state.loadings.push({
         action: getActionName(action.type),
         params: action.payload,
       })
     })
-    builder.addMatcher(action => action.type.endsWith("/fulfilled"), (state: IToastsState, action: PayloadAction) => {
+    builder.addMatcher(action => !action.type.startsWith("api") && action.type.endsWith("/fulfilled"), (state: IToastsState, action: PayloadAction) => {
       let name = getActionName(action.type)
       state.successes.push({
         action: name,
@@ -41,7 +42,7 @@ const toasts = createSlice({
       })
       state.loadings = removeLoadingAction(name, state.loadings)
     })
-    builder.addMatcher(action => action.type.endsWith("/rejected"), (state: IToastsState, action: UnknownAsyncThunkRejectedAction) => {
+    builder.addMatcher(action => !action.type.startsWith("api") && action.type.endsWith("/rejected"), (state: IToastsState, action: UnknownAsyncThunkRejectedAction) => {
       let name = getActionName(action.type)
       let message = action.payload
       if (message === undefined) {
@@ -57,6 +58,11 @@ const toasts = createSlice({
 })
 
 // ------------------------------------------
+
+const toastsSelect = (state: RootState) => state[TOASTS_STORE]
+export const selectLatestToastsLoadings = createDraftSafeSelector(toastsSelect, state => state.loadings[state.loadings.length - 1])
+export const selectLatestToastsSuccesses = createDraftSafeSelector(toastsSelect, state => state.successes[state.successes.length - 1])
+export const selectLatestToastsErrors = createDraftSafeSelector(toastsSelect, state => state.errors[state.errors.length - 1])
 
 export const {} = toasts.actions
 export default toasts.reducer

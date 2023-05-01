@@ -1,9 +1,15 @@
-import { useState } from "react"
+import { ReactElement, useState } from "react"
 import { Alert, Grow } from "@mui/material"
 
+import { ToastProps } from "../../models/common/toast.models"
 
-export default function Toast() {
+
+export default function Toast({action, type}: ToastProps) {
   const [open, setOpen] = useState(true)
+
+  const displayAlert = () => {
+
+  }
 
   const handleClose = (): void => {
     setOpen(false)
@@ -11,9 +17,23 @@ export default function Toast() {
 
   return (
     <Grow in={ open }>
-      <Alert onClose={ handleClose } severity="success" sx={ {width: "100%"} }>
-        This is a success message!
-      </Alert>
+      {
+        (type && type === "success" &&
+          <Alert onClose={ handleClose } severity={ type } sx={ {width: "100%"} }>
+            { action } success
+          </Alert>
+        )
+        ||
+        (type && type === "error" &&
+          <Alert onClose={ handleClose } severity={ type } sx={ {width: "100%"} }>
+            { action } error
+          </Alert>
+        )
+        ||
+        <Alert onClose={ handleClose } severity={ type } sx={ {width: "100%"} }>
+          { action } loading
+        </Alert>
+      }
     </Grow>
   )
 }
