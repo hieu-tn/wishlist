@@ -3,9 +3,9 @@ import { ActionReducerMapBuilder, createAsyncThunk, createEntityAdapter, createS
 import { CRAWLER_STORE, StoreStatus } from "constants/store"
 import { RootState } from "../store"
 import { AsyncThunkConfig } from "../models"
-import { extraStatusReducers } from "../actions"
 import serverApi from "../api/serverApi"
 import { ICrawlerState, IMatch, IProvider, ISetKeywordAction, ISetMatchesAction, ISetProvidersAction } from "./crawlerModels"
+import { extraStatusReducers } from "../actions"
 
 
 // ---------------- ADAPTERS ----------------
@@ -78,7 +78,6 @@ const initialState: ICrawlerState = {
   providers: providersInitialState,
   matches: matchesInitialState,
   status: StoreStatus.IDLE,
-  error: null,
 }
 
 export const crawlerSlice = createSlice({

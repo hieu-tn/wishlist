@@ -14,13 +14,5 @@ export const extraStatusReducers = (builder: ActionReducerMapBuilder<IState>) =>
   })
   builder.addMatcher(action => action.type.endsWith("/rejected"), (state: IState, action: UnknownAsyncThunkRejectedAction) => {
     state.status = StoreStatus.ERROR
-    let message = action.payload
-    if (message === undefined) {
-      message = action.error.message
-    }
-    state.error = {
-      action: action.type,
-      message: message,
-    }
   })
 }

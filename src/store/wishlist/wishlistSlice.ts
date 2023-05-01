@@ -3,7 +3,6 @@ import { ActionReducerMapBuilder, createAsyncThunk, createEntityAdapter, createS
 import { RootState } from "../store"
 import { StoreStatus, WISHLIST_STORE } from "../../constants/store"
 import { AsyncThunkConfig } from "../models"
-import { extraStatusReducers } from "../actions"
 import {
   IAddProductAction,
   IAddProductToWishlist,
@@ -17,6 +16,7 @@ import {
 } from "./wishlistModels"
 import serverApi from "../api/serverApi"
 import { IProductItem } from "../../modules/home/models/product.model"
+import { extraStatusReducers } from "../actions"
 
 
 // ---------------- ADAPTERS ----------------
@@ -93,7 +93,6 @@ export const removeProductFromWishlist = createAsyncThunk<IRemoveProductFromWish
     let shouldRemove = true
     // if user has more than 1 wishlist, check other wishlists whether product belongs to
     if (Object.keys(state.wishlist.entities).length > 1) {
-      console.log(0)
       for (let w of Object.values(state.wishlist.entities)) {
         w = w as IWishlist
         if (w.id != wishlistId) {
@@ -120,7 +119,6 @@ const initialState: IWishlistState = {
   ...wishlistsInitialState,
   products: productsAdapterInitialState,
   status: StoreStatus.IDLE,
-  error: null,
 }
 
 const wishlistSlice = createSlice({

@@ -1,9 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit"
 
 import serverApi from "./api/serverApi"
-import { CRAWLER_STORE, WISHLIST_STORE } from "../constants/store"
+import { CRAWLER_STORE, TOASTS_STORE, WISHLIST_STORE } from "../constants/store"
 import crawlerReducer from "./crawler/crawlerSlice"
 import wishlistReducer from "./wishlist/wishlistSlice"
+import toastReducer from "./toasts/toastsSlice"
 import counterReducer from "./counter/counterSlice"
 
 
@@ -12,6 +13,7 @@ const store = configureStore({
     [serverApi.reducerPath]: serverApi.reducer,
     [CRAWLER_STORE]: crawlerReducer,
     [WISHLIST_STORE]: wishlistReducer,
+    [TOASTS_STORE]: toastReducer,
     // @todo debug
     counter: counterReducer,
   },

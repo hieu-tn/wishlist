@@ -1,16 +1,10 @@
 import { Dispatch } from "@reduxjs/toolkit"
-import { StoreStatus } from "../constants/store"
 import { RootState } from "./store"
+import { StoreStatus } from "../constants/store"
 
 
 export interface IState {
   status: StoreStatus
-  error: IStateError | null
-}
-
-export interface IStateError {
-  action: string
-  message: any
 }
 
 export type AsyncThunkConfig = {

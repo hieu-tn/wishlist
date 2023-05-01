@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { ActionReducerMapBuilder, createSlice } from "@reduxjs/toolkit"
+import { extraStatusReducers } from "../actions"
 
 
 const initialState = {
@@ -12,6 +13,9 @@ export const counterSlice = createSlice({
     increaseCounter(state, action) {
       state.value += 1
     },
+  },
+  extraReducers: (builder: ActionReducerMapBuilder<any>) => {
+    extraStatusReducers(builder)
   },
 })
 
