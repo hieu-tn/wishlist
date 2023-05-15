@@ -4,15 +4,17 @@ import { Alert, Grow } from "@mui/material"
 import { ToastProps } from "../../models/common/toast.models"
 
 
-export default function Toast({id, action, type, removeMessage}: ToastProps) {
+export default function Toast({id, action, type, expiresAt, removeMessage}: ToastProps) {
   const [open, setOpen] = useState(true)
 
   useEffect(() => {
     if (open) {
-      const timeout = setTimeout(() => {
-        setOpen(false)
-      }, 4000)
-      return () => clearTimeout(timeout)
+      const interval = setInterval(() => {
+        if (Date.now() >= parseInt(expiresAt)) {
+          setOpen(false)
+        }
+      }, 1000)
+      return () => clearInterval(interval)
     }
   })
 
@@ -28,7 +30,7 @@ export default function Toast({id, action, type, removeMessage}: ToastProps) {
 
   return (
     <Grow in={ open } data-id={ id }>
-      <Alert onClose={ handleClose } severity={ type } sx={ {width: "100%"} }>
+      <Alert onClose={ handleClose } severity={ type || "info" } sx={ {width: "100%"} }>
         { action } { type == "info" ? "loading" : type }
       </Alert>
     </Grow>

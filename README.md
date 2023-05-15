@@ -36,4 +36,4 @@ An online store of grocery
 - mui navigation to menu
 - tab/accordion to wishlists: future feature
 - only set store status if its action is triggered
-- style toast message
+- ~~style toast message~~

@@ -17,7 +17,10 @@ export default function ToastQueue() {
 
     if (msg.id in messages) return
 
-    let tmpMessages = {...messages, [msg.id]: {id: msg.id, action: msg.action, type}}
+    let tmpMessages = {
+      ...messages,
+      [msg.id]: {id: msg.id, action: msg.action, type, expiresAt: (Date.now() + 4000).toString()},
+    }
     let keys = Object.keys(tmpMessages)
     if (keys.length > MAX_MESSAGE_QUEUE) {
       delete tmpMessages[keys[0]]
@@ -42,7 +45,12 @@ export default function ToastQueue() {
         <Box sx={ {width: 450} }>
           <Stack direction={ "row" } spacing={ 2 } useFlexGap flexWrap="wrap">
             { messages && Object.values(messages).map(msg => (
-              <Toast key={ msg.id } id={ msg.id } action={ msg.action } type={ msg.type } removeMessage={ removeMessage }/>
+              <Toast key={ msg.id }
+                     id={ msg.id }
+                     action={ msg.action }
+                     type={ msg.type }
+                     expiresAt={ msg.expiresAt }
+                     removeMessage={ removeMessage }/>
             )) }
           </Stack>
         </Box>
