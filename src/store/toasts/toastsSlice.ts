@@ -1,4 +1,6 @@
 import { ActionReducerMapBuilder, createDraftSafeSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { v4 as uuidv4 } from "uuid"
+
 import { TOASTS_STORE } from "../../constants/store"
 import { IActionLoading, IToastsState } from "./toastsModels"
 import { UnknownAsyncThunkRejectedAction } from "@reduxjs/toolkit/dist/matchers"
@@ -30,6 +32,7 @@ const toasts = createSlice({
   extraReducers: ((builder: ActionReducerMapBuilder<IToastsState>) => {
     builder.addMatcher(action => !action.type.startsWith("api") && action.type.endsWith("/pending"), (state: IToastsState, action: PayloadAction) => {
       state.loadings.push({
+        id: uuidv4(),
         action: getActionName(action.type),
         params: action.payload,
       })
@@ -37,6 +40,7 @@ const toasts = createSlice({
     builder.addMatcher(action => !action.type.startsWith("api") && action.type.endsWith("/fulfilled"), (state: IToastsState, action: PayloadAction) => {
       let name = getActionName(action.type)
       state.successes.push({
+        id: uuidv4(),
         action: name,
         response: action.payload,
       })
@@ -49,6 +53,7 @@ const toasts = createSlice({
         message = action.error.message
       }
       state.errors.push({
+        id: uuidv4(),
         action: name,
         message: message,
       })

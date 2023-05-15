@@ -3,7 +3,7 @@ import { Outlet, useNavigation } from "react-router-dom"
 
 import Header from "components/includes/Header"
 import Footer from "components/includes/Footer"
-import ToastStack from "../components/common/ToastStack"
+import ToastQueue from "../components/common/ToastQueue"
 
 
 export default function DefaultLayout() {
@@ -21,7 +21,7 @@ export default function DefaultLayout() {
         <Outlet/>
       </main>
 
-      <ToastStack/>
+      <ToastQueue/>
 
       <Footer/>
     </>
