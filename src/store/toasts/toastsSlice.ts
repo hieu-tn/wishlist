@@ -1,8 +1,8 @@
-import { ActionReducerMapBuilder, createDraftSafeSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { ActionReducerMapBuilder, createEntityAdapter, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { v4 as uuidv4 } from "uuid"
 
 import { TOASTS_STORE } from "../../constants/store"
-import { IActionLoading, IToastsState } from "./toastsModels"
+import { IToastItem, IToastsState, ToastItemType } from "./toastsModels"
 import { UnknownAsyncThunkRejectedAction } from "@reduxjs/toolkit/dist/matchers"
 import { RootState } from "../store"
 
@@ -13,17 +13,18 @@ const getActionName = (action: string): string => {
   return name.join("/")
 }
 
-const removeLoadingAction = (action: string, actions: Array<IActionLoading>): Array<IActionLoading> => {
-  return actions.filter(a => a.action !== action)
-}
+// ---------------- ADAPTERS ----------------
+
+const toastsAdapter = createEntityAdapter<IToastItem>({
+  selectId: t => t.id,
+  // sortComparer: (a, b) => a.id.localeCompare(b.id),
+})
+
+// ------------------------------------------
 
 // ---------------- TOASTS SLICE ----------------
 
-const initialState: IToastsState = {
-  loadings: [],
-  successes: [],
-  errors: [],
-}
+const initialState: IToastsState = toastsAdapter.getInitialState()
 
 const toasts = createSlice({
   name: TOASTS_STORE,
@@ -31,43 +32,42 @@ const toasts = createSlice({
   reducers: {},
   extraReducers: ((builder: ActionReducerMapBuilder<IToastsState>) => {
     builder.addMatcher(action => !action.type.startsWith("api") && action.type.endsWith("/pending"), (state: IToastsState, action: PayloadAction) => {
-      state.loadings.push({
+      toastsAdapter.addOne(state, {
         id: uuidv4(),
-        action: getActionName(action.type),
-        params: action.payload,
+        name: getActionName(action.type),
+        message: action.payload,
+        type: ToastItemType.LOADING,
       })
     })
     builder.addMatcher(action => !action.type.startsWith("api") && action.type.endsWith("/fulfilled"), (state: IToastsState, action: PayloadAction) => {
-      let name = getActionName(action.type)
-      state.successes.push({
+      toastsAdapter.addOne(state, {
         id: uuidv4(),
-        action: name,
-        response: action.payload,
+        name: getActionName(action.type),
+        message: action.payload,
+        type: ToastItemType.SUCCESS,
       })
-      state.loadings = removeLoadingAction(name, state.loadings)
     })
     builder.addMatcher(action => !action.type.startsWith("api") && action.type.endsWith("/rejected"), (state: IToastsState, action: UnknownAsyncThunkRejectedAction) => {
-      let name = getActionName(action.type)
-      let message = action.payload
-      if (message === undefined) {
-        message = action.error.message
-      }
-      state.errors.push({
+      toastsAdapter.addOne(state, {
         id: uuidv4(),
-        action: name,
-        message: message,
+        name: getActionName(action.type),
+        message: action.payload,
+        type: ToastItemType.ERROR,
       })
-      state.loadings = removeLoadingAction(name, state.loadings)
     })
   }),
 })
 
 // ------------------------------------------
 
-const toastsSelect = (state: RootState) => state[TOASTS_STORE]
-export const selectLatestToastsLoadings = createDraftSafeSelector(toastsSelect, state => state.loadings[state.loadings.length - 1])
-export const selectLatestToastsSuccesses = createDraftSafeSelector(toastsSelect, state => state.successes[state.successes.length - 1])
-export const selectLatestToastsErrors = createDraftSafeSelector(toastsSelect, state => state.errors[state.errors.length - 1])
+//getSelectors creates these selectors and rename them with aliases using destructuring
+export const {
+  selectIds: selectToastIds,
+  selectEntities: selectToastEntities,
+  selectAll: selectAllToasts,
+  selectTotal: selectTotalToasts,
+  selectById: selectToastById,
+} = toastsAdapter.getSelectors((state: RootState) => state.toasts)
 
 export const {} = toasts.actions
 export default toasts.reducer

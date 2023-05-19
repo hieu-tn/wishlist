@@ -1,10 +1,10 @@
-import { AlertColor } from "@mui/material"
+import { ToastItemType } from "../../store/toasts/toastsModels"
 
 
 export type ToastProps = {
   id: string
   action: string
-  type: AlertColor | undefined
+  type: ToastItemType
   expiresAt: string
   removeMessage: any
 }
@@ -12,6 +12,6 @@ export type ToastProps = {
 export interface IToastMessage {
   id: string
   action: string
-  type: AlertColor
+  type: ToastItemType
   expiresAt: string
 }

@@ -1,22 +1,18 @@
-export interface IToastsState {
-  loadings: Array<IActionLoading>
-  successes: Array<IActionSuccess>
-  errors: Array<IActionError>
+import { EntityState } from "@reduxjs/toolkit"
+
+
+export interface IToastsState extends EntityState<IToastItem> {}
+
+export enum ToastItemType {
+  INFO = "info",
+  LOADING = "loading",
+  SUCCESS = "success",
+  ERROR = "error",
 }
 
-export interface IToastAction {
+export interface IToastItem {
   id: string
-  action: string
-}
-
-export interface IActionLoading extends IToastAction {
-  params: any
-}
-
-export interface IActionSuccess extends IToastAction {
-  response: any
-}
-
-export interface IActionError extends IToastAction {
+  name: string
+  type: ToastItemType
   message: any
 }

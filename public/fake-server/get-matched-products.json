@@ -1,6 +1,6 @@
 [
   {
-    "id": "1",
+    "id": "milk_1",
     "name": "Milk 1",
     "imageUrl": "https://i5.walmartimages.com/asr/56c0f88b-1d6c-4180-a2bb-3b3fc364136f.7f17ce082a974d1d14b7aa334e7e7332.jpeg",
     "url": "https://www.walmart.ca/en/ip/Dairyland-2-Partly-Skimmed-Milk/6000075688886",
@@ -9,7 +9,7 @@
     "provider": "WALMART"
   },
   {
-    "id": "2",
+    "id": "milk_2",
     "name": "Milk 2",
     "imageUrl": "https://assets.shop.loblaws.ca/products/21128369/b1/en/front/21128369_front_a01.png",
     "url": "https://www.realcanadiansuperstore.ca/lactose-free-2-partly-skimmed-ultrafiltered-milk/p/21128369_EA",
@@ -18,7 +18,7 @@
     "provider": "CANADIAN_SUPERSTORE"
   },
   {
-    "id": "3",
+    "id": "milk_3",
     "name": "Milk 3",
     "imageUrl": "https://i5.walmartimages.com/asr/0b180cd3-d996-45a3-a5f8-bdea0b101ac7.76b71de6b8bcd11baf342cd6111de6aa.jpeg",
     "url": "https://www.walmart.ca/en/ip/Dairyland-3-25-milk/6000075688890",
@@ -27,7 +27,7 @@
     "provider": "WALMART"
   },
   {
-    "id": "4",
+    "id": "milk_4",
     "name": "Milk 4",
     "imageUrl": "https://dtbsghs68yrzo.cloudfront.net/3d9dbbfc-0fd2-4e60-9be2-0582f3078e21/productImages/10470.jpg",
     "url": "https://shoponline.calgarycoop.com/quarrypark#/product/10470",
