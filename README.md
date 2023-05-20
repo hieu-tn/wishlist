@@ -28,7 +28,7 @@ An online store of grocery
 - ~~remove product from wishlist~~
 - fix bug add same product to wishlist
 - ~~toast~~
-- display number of added products as a badge
+- ~~display number of added products as a badge~~
 - wishlist page layout
 - remove product from wishlist page
 - calculate bills
@@ -40,3 +40,4 @@ An online store of grocery
 - ~~add product to multiple wishlist~~
 - cannot click where toast message take place (CSS issue)
 - show add products when clicking toggle button
+- popover toggle product actions: cannot scroll up/down

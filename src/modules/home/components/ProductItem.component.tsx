@@ -35,11 +35,9 @@ export default function ProductItemComponent({data}: ProductItemProps) {
 
   const toggleProductToWishlist = (wishlistId: string, action: ToggleProductActions) => {
     if (action === ToggleProductActions.ADD) {
-      let product = data
-      dispatch(wishlistActions.addProductToWishlist({wishlistId, product}))
+      dispatch(wishlistActions.addProductToWishlist({wishlistId, product: data}))
     } else {
-      let productId = data.id
-      dispatch(wishlistActions.removeProductFromWishlist({wishlistId, productId}))
+      dispatch(wishlistActions.removeProductFromWishlist({wishlistId, productId: data.id}))
     }
   }
 
