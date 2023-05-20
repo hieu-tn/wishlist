@@ -32,16 +32,20 @@
     transition: transform 300ms ease-out;
   }
 
-  .btnAdd {
+  .btnShop {
     position: absolute;
     bottom: 0;
     left: 0;
-  }
 
-  .btnRemove {
-    position: absolute;
-    bottom: 40px;
-    left: 0;
+    svg {
+      transition: transform 500ms ease-out;
+    }
+
+    &:hover {
+      svg {
+        transform: rotate(150deg);
+      }
+    }
   }
 }
 

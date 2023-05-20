@@ -37,3 +37,6 @@ An online store of grocery
 - tab/accordion to wishlists: future feature
 - only set store status if its action is triggered
 - ~~style toast message~~
+- ~~add product to multiple wishlist~~
+- cannot click where toast message take place (CSS issue)
+- show add products when clicking toggle button

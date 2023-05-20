@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { Alert, AlertColor, Grow } from "@mui/material"
 
-import { ToastProps } from "../../models/common/toast.models"
+import { ToastProps } from "../../models/toasts/toast.models"
 import { CrawlerActionToastMessages } from "../../store/crawler/crawlerActions"
 import { ToastItemType } from "../../store/toasts/toastsModels"
 import { WishlistActionToastMessages } from "../../store/wishlist/wishlistActions"

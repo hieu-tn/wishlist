@@ -6,3 +6,8 @@ export type ProductItemProps = {
 }
 
 export interface IProductItem extends IMatch {}
+
+export enum ToggleProductActions {
+  ADD = "add",
+  REMOVE = "remove",
+}

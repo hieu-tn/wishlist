@@ -23,7 +23,7 @@ import { extraStatusReducers } from "../actions"
 
 const wishlistsAdapter = createEntityAdapter<IWishlist>({
   selectId: w => w.id,
-  sortComparer: (a, b) => a.id.localeCompare(b.id),
+  // sortComparer: (a, b) => a.id.localeCompare(b.id),
 })
 const wishlistsInitialState = wishlistsAdapter.getInitialState()
 

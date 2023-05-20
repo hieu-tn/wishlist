@@ -1,17 +1,21 @@
-import { IconButton, Link } from "@mui/material"
-import styles from "styles/modules/home/components/product-item.module.scss"
-import AddCircleIcon from "@mui/icons-material/AddCircle"
-import RemoveCircleIcon from "@mui/icons-material/RemoveCircle"
+import { SyntheticEvent, useState } from "react"
+import { Box, Checkbox, FormControlLabel, IconButton, Link, Popover } from "@mui/material"
+import LoopIcon from "@mui/icons-material/Loop"
 
-import { IProductItem, ProductItemProps } from "modules/home/models/product.model"
+import styles from "styles/modules/home/components/product-item.module.scss"
+import { ProductItemProps, ToggleProductActions } from "modules/home/models/product.model"
 import { useAppDispatch, useAppSelector } from "../../../store/hooks"
-import { selectAllProviders } from "store/crawler/crawlerSlice"
+import * as crawlerActions from "store/crawler/crawlerSlice"
 import * as wishlistActions from "store/wishlist/wishlistSlice"
 
 
 export default function ProductItemComponent({data}: ProductItemProps) {
+  const [anchorEl, setAnchorEl] = useState<any>(null)
+  const open = Boolean(anchorEl)
+
   const dispatch = useAppDispatch()
-  const providers = useAppSelector(selectAllProviders)
+  const providers = useAppSelector(crawlerActions.selectAllProviders)
+  const wishlists = useAppSelector(wishlistActions.selectAllWishlists)
 
   const providerName = (code: string): string => {
     try {
@@ -22,15 +26,24 @@ export default function ProductItemComponent({data}: ProductItemProps) {
     }
   }
 
-  const removeProductFromWishlist = (productId: string): void => {
-    let wishlistId = "1"
-    dispatch(wishlistActions.removeProductFromWishlist({wishlistId, productId}))
+  const shopClickEventHandler = (e: SyntheticEvent) => setAnchorEl(e.currentTarget)
+
+  const toggleShopProductEventHandler = (checked: boolean, wishlistId: string) => {
+    let action = checked ? ToggleProductActions.ADD : ToggleProductActions.REMOVE
+    toggleProductToWishlist(wishlistId, action)
   }
 
-  const addProductToWishlist = (product: IProductItem): void => {
-    let wishlistId = "1"
-    dispatch(wishlistActions.addProductToWishlist({wishlistId, product}))
+  const toggleProductToWishlist = (wishlistId: string, action: ToggleProductActions) => {
+    if (action === ToggleProductActions.ADD) {
+      let product = data
+      dispatch(wishlistActions.addProductToWishlist({wishlistId, product}))
+    } else {
+      let productId = data.id
+      dispatch(wishlistActions.removeProductFromWishlist({wishlistId, productId}))
+    }
   }
+
+  const handleClose = () => setAnchorEl(null)
 
   return (
     <div className={ styles.productItem }>
@@ -42,12 +55,29 @@ export default function ProductItemComponent({data}: ProductItemProps) {
             alt={ data.name }
             loading="lazy"
           />
-          <IconButton aria-label="remove" className={ styles.btnRemove } onClick={ () => removeProductFromWishlist(data.id) }>
-            <RemoveCircleIcon color="error" fontSize="large"/>
+          <IconButton aria-label="add" className={ styles.btnShop } onClick={ shopClickEventHandler }>
+            <LoopIcon color="secondary"/>
           </IconButton>
-          <IconButton aria-label="add" className={ styles.btnAdd } onClick={ () => addProductToWishlist(data) }>
-            <AddCircleIcon color="success" fontSize="large"/>
-          </IconButton>
+          <Popover
+            open={ open }
+            anchorEl={ anchorEl }
+            onClose={ handleClose }
+            anchorOrigin={ {
+              vertical: "bottom",
+              horizontal: "left",
+            } }
+          >
+            <Box sx={ {px: 3, py: 1 / 2} }>
+              { wishlists && wishlists.map(w =>
+                <Box key={ w.id }>
+                  <FormControlLabel
+                    control={ <Checkbox/> }
+                    label={ w.name }
+                    onChange={ (e, checked) => toggleShopProductEventHandler(checked, w.id) }/>
+                </Box>,
+              ) }
+            </Box>
+          </Popover>
         </div>
         <div className={ styles.content }>
           <p><Link href={ data.url } underline="hover" target="_blank" rel="noreferrer">{ data.name }</Link></p>
