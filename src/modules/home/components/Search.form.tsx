@@ -42,7 +42,7 @@ export default function SearchForm() {
           placeholder="Enter product name..."
           value={ keyword }
           onChange={ handleOnChange }/>
-        <Button variant="contained" type="submit" size="large">Submit</Button>
+        <Button variant="contained" type="submit" size="large" disabled={keyword.length < 2}>Submit</Button>
       </Stack>
     </Box>
   )

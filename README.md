@@ -9,24 +9,24 @@ An online store of grocery
 ### Tasks
 
 - ~~Install & configure create-react-app~~
-- study service-worker.ts
+- **study service-worker.ts**
 - ~~Install and configure redux-toolkit~~
-- action CLEAR
+- **action CLEAR**
 - ~~store crawler~~
 - ~~Install and configure MUI~~
-- Create shared MUI component
+- **Create shared MUI component**
 - ~~Crawl products by keyword (do not implement)~~
 - ~~UI product item on homepage~~
 - ~~fake json file from server~~
-- create loading animation
-- persist store
+- **create loading animation**
+- **persist store**
 - ~~store wishlist~~
-- enhance UI
-- responsive
-- toggle remove button if product in list
+- **enhance UI**
+- **responsive**
+- ~~toggle remove button if product in list~~
 - ~~add product to wishlist~~
 - ~~remove product from wishlist~~
-- fix bug add same product to wishlist
+- ~~fix bug add same product to wishlist~~
 - ~~toast~~
 - ~~display number of added products as a badge~~
 - wishlist page layout
@@ -39,5 +39,5 @@ An online store of grocery
 - ~~style toast message~~
 - ~~add product to multiple wishlist~~
 - cannot click where toast message take place (CSS issue)
-- show add products when clicking toggle button
+- ~~show add products when clicking toggle button~~
 - popover toggle product actions: cannot scroll up/down

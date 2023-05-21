@@ -1,4 +1,4 @@
-import { SyntheticEvent, useState } from "react"
+import { SyntheticEvent, useEffect, useState } from "react"
 import { Box, Checkbox, FormControlLabel, IconButton, Link, Popover } from "@mui/material"
 import LoopIcon from "@mui/icons-material/Loop"
 
@@ -11,11 +11,10 @@ import * as wishlistActions from "store/wishlist/wishlistSlice"
 
 export default function ProductItemComponent({data}: ProductItemProps) {
   const [anchorEl, setAnchorEl] = useState<any>(null)
-  const open = Boolean(anchorEl)
-
   const dispatch = useAppDispatch()
+  const open = Boolean(anchorEl)
   const providers = useAppSelector(crawlerActions.selectAllProviders)
-  const wishlists = useAppSelector(wishlistActions.selectAllWishlists)
+  const wishlists = useAppSelector(wishlistActions.selectWishlistEntities)
 
   const providerName = (code: string): string => {
     try {
@@ -28,7 +27,7 @@ export default function ProductItemComponent({data}: ProductItemProps) {
 
   const shopClickEventHandler = (e: SyntheticEvent) => setAnchorEl(e.currentTarget)
 
-  const toggleShopProductEventHandler = (checked: boolean, wishlistId: string) => {
+  const toggleShopProductEventHandler = (checked: boolean, wishlistId: string = "") => {
     let action = checked ? ToggleProductActions.ADD : ToggleProductActions.REMOVE
     toggleProductToWishlist(wishlistId, action)
   }
@@ -42,6 +41,10 @@ export default function ProductItemComponent({data}: ProductItemProps) {
   }
 
   const handleClose = () => setAnchorEl(null)
+
+  const isProductInWishlist = (key: string): boolean => {
+    return wishlists[key]?.products.includes(data.id) || false
+  }
 
   return (
     <div className={ styles.productItem }>
@@ -66,12 +69,13 @@ export default function ProductItemComponent({data}: ProductItemProps) {
             } }
           >
             <Box sx={ {px: 3, py: 1 / 2} }>
-              { wishlists && wishlists.map(w =>
-                <Box key={ w.id }>
+              { wishlists && Object.entries(wishlists).map(([key, wishlist]) =>
+                <Box key={ wishlist?.id }>
                   <FormControlLabel
                     control={ <Checkbox/> }
-                    label={ w.name }
-                    onChange={ (e, checked) => toggleShopProductEventHandler(checked, w.id) }/>
+                    label={ wishlist?.name }
+                    checked={ isProductInWishlist(key) }
+                    onChange={ (e, checked) => toggleShopProductEventHandler(checked, wishlist?.id) }/>
                 </Box>,
               ) }
             </Box>
