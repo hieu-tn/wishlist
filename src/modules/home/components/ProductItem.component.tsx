@@ -1,5 +1,5 @@
 import { SyntheticEvent, useEffect, useState } from "react"
-import { Box, Checkbox, FormControlLabel, IconButton, Link, Popover } from "@mui/material"
+import { Box, Checkbox, ClickAwayListener, FormControlLabel, IconButton, Link, Popover, Popper, styled } from "@mui/material"
 import LoopIcon from "@mui/icons-material/Loop"
 
 import styles from "styles/modules/home/components/product-item.module.scss"
@@ -7,10 +7,11 @@ import { ProductItemProps, ToggleProductActions } from "modules/home/models/prod
 import { useAppDispatch, useAppSelector } from "../../../store/hooks"
 import * as crawlerActions from "store/crawler/crawlerSlice"
 import * as wishlistActions from "store/wishlist/wishlistSlice"
+import { blue, grey } from "@mui/material/colors"
 
 
 export default function ProductItemComponent({data}: ProductItemProps) {
-  const [anchorEl, setAnchorEl] = useState<any>(null)
+  const [anchorEl, setAnchorEl] = useState<Element | null>()
   const dispatch = useAppDispatch()
   const open = Boolean(anchorEl)
   const providers = useAppSelector(crawlerActions.selectAllProviders)
@@ -46,6 +47,18 @@ export default function ProductItemComponent({data}: ProductItemProps) {
     return wishlists[key]?.products.includes(data.id) || false
   }
 
+  const styleShopContainer = {
+    px: 3, py: 1 / 2, color: grey[900], background: "#fff",
+    boxShadow: `0px 2px 24px ${ blue[100] }`,
+    "&:hover": {
+      borderColor: blue[400],
+    },
+    "&:focus": {
+      borderColor: blue[400],
+      boxShadow: `0 0 0 3px ${ blue[200] }`,
+    },
+  }
+
   return (
     <div className={ styles.productItem }>
       <div className={ styles.productItemInner }>
@@ -59,27 +72,32 @@ export default function ProductItemComponent({data}: ProductItemProps) {
           <IconButton aria-label="add" className={ styles.btnShop } onClick={ shopClickEventHandler }>
             <LoopIcon color="secondary"/>
           </IconButton>
-          <Popover
+          <Popper
             open={ open }
             anchorEl={ anchorEl }
-            onClose={ handleClose }
-            anchorOrigin={ {
-              vertical: "bottom",
-              horizontal: "left",
-            } }
+            placement="bottom-start"
+            disablePortal={ false }
+            modifiers={ [
+              {
+                name: "flip",
+                enabled: false,
+              },
+            ] }
           >
-            <Box sx={ {px: 3, py: 1 / 2} }>
-              { wishlists && Object.entries(wishlists).map(([key, wishlist]) =>
-                <Box key={ wishlist?.id }>
-                  <FormControlLabel
-                    control={ <Checkbox/> }
-                    label={ wishlist?.name }
-                    checked={ isProductInWishlist(key) }
-                    onChange={ (e, checked) => toggleShopProductEventHandler(checked, wishlist?.id) }/>
-                </Box>,
-              ) }
-            </Box>
-          </Popover>
+            <ClickAwayListener onClickAway={ handleClose }>
+              <Box className={ styles.shopContainer } sx={ styleShopContainer }>
+                { wishlists && Object.entries(wishlists).map(([key, wishlist]) =>
+                  <Box key={ wishlist?.id }>
+                    <FormControlLabel
+                      control={ <Checkbox/> }
+                      label={ wishlist?.name }
+                      checked={ isProductInWishlist(key) }
+                      onChange={ (e, checked) => toggleShopProductEventHandler(checked, wishlist?.id) }/>
+                  </Box>,
+                ) }
+              </Box>
+            </ClickAwayListener>
+          </Popper>
         </div>
         <div className={ styles.content }>
           <p><Link href={ data.url } underline="hover" target="_blank" rel="noreferrer">{ data.name }</Link></p>

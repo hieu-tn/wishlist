@@ -95,8 +95,8 @@ export const removeProductFromWishlist = createAsyncThunk<IRemoveProductFromWish
     if (Object.keys(state.wishlist.entities).length > 1) {
       for (let w of Object.values(state.wishlist.entities)) {
         w = w as IWishlist
-        if (w.id != wishlistId) {
-          let shouldKeep = w.products.some(p => p == productId)
+        if (w.id !== wishlistId) {
+          let shouldKeep = w.products.some(p => p === productId)
           if (shouldKeep) {
             shouldRemove = false
             break
@@ -151,7 +151,7 @@ const wishlistSlice = createSlice({
     })
     builder.addCase(removeProductFromWishlist.fulfilled, (state: IWishlistState, action: IRemoveProductFromWishlistAction) => {
       let products = state.entities[action.payload.wishlistId]?.products ?? []
-      products = products.filter(x => x != action.payload.productId)
+      products = products.filter(x => x !== action.payload.productId)
       // @todo found duplicates, violate DRY
       wishlistsAdapter.updateOne(state, {
         id: action.payload.wishlistId,
