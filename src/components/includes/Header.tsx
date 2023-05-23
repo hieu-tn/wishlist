@@ -41,7 +41,7 @@ export default function Header() {
             <NavLink to="/">
               <IconButton><Cabin sx={ {color: pink[500]} }/></IconButton>
             </NavLink>
-            <NavLink to="/wishlist">
+            <NavLink to="/wishlists">
               <IconButton>
                 <Badge badgeContent={ qty } showZero max={ MAX_QTY } color="secondary">
                   <ShoppingCartOutlined color="action"/>

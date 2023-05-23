@@ -3,7 +3,7 @@ import { Container, Grid } from "@mui/material"
 import "styles/modules/home/home.route.scss"
 
 import SearchForm from "modules/home/components/Search.form"
-import ProductListComponent from "./components/ProductList.component"
+import ProductList from "./components/ProductList"
 import { useGetProvidersQuery } from "store/crawler/crawlerSlice"
 import { useGetWishlistsQuery } from "store/wishlist/wishlistSlice"
 
@@ -24,7 +24,7 @@ export default function HomeRoute() {
 
       <section className="results">
         <Container>
-          <ProductListComponent/>
+          <ProductList/>
         </Container>
       </section>
     </>

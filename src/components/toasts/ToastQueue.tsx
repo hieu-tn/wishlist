@@ -45,14 +45,14 @@ export default function ToastQueue() {
       <Snackbar open={ true }>
         <Box sx={ {width: 450} }>
           <Stack direction={ "row" } spacing={ 2 } useFlexGap flexWrap="wrap">
-            { messages && Object.values(messages).map(msg => (
-              <Toast key={ msg.id }
-                     id={ msg.id }
-                     action={ msg.action }
-                     type={ msg.type }
-                     expiresAt={ msg.expiresAt }
-                     removeMessage={ removeMessage }/>
-            )) }
+            {/*{ messages && Object.values(messages).map(msg => (*/}
+            {/*  <Toast key={ msg.id }*/}
+            {/*         id={ msg.id }*/}
+            {/*         action={ msg.action }*/}
+            {/*         type={ msg.type }*/}
+            {/*         expiresAt={ msg.expiresAt }*/}
+            {/*         removeMessage={ removeMessage }/>*/}
+            {/*)) }*/}
           </Stack>
         </Box>
       </Snackbar>

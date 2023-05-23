@@ -1,5 +1,5 @@
 import { SyntheticEvent, useEffect, useState } from "react"
-import { Box, Checkbox, ClickAwayListener, FormControlLabel, IconButton, Link, Popover, Popper, styled } from "@mui/material"
+import { Box, Checkbox, ClickAwayListener, FormControlLabel, IconButton, Link, Popover, Popper, styled, Typography } from "@mui/material"
 import LoopIcon from "@mui/icons-material/Loop"
 
 import styles from "styles/modules/home/components/product-item.module.scss"
@@ -10,7 +10,7 @@ import * as wishlistActions from "store/wishlist/wishlistSlice"
 import { blue, grey } from "@mui/material/colors"
 
 
-export default function ProductItemComponent({data}: ProductItemProps) {
+export default function ProductItem({data}: ProductItemProps) {
   const [anchorEl, setAnchorEl] = useState<Element | null>()
   const dispatch = useAppDispatch()
   const open = Boolean(anchorEl)
@@ -60,52 +60,50 @@ export default function ProductItemComponent({data}: ProductItemProps) {
   }
 
   return (
-    <div className={ styles.productItem }>
-      <div className={ styles.productItemInner }>
-        <div className={ styles.imageContainer }>
-          <img
-            src={ `${ data.imageUrl }` }
-            srcSet={ `${ data.imageUrl }` }
-            alt={ data.name }
-            loading="lazy"
-          />
-          <IconButton aria-label="add" className={ styles.btnShop } onClick={ shopClickEventHandler }>
-            <LoopIcon color="secondary"/>
-          </IconButton>
-          <Popper
-            open={ open }
-            anchorEl={ anchorEl }
-            placement="bottom-start"
-            disablePortal={ false }
-            modifiers={ [
-              {
-                name: "flip",
-                enabled: false,
-              },
-            ] }
-          >
-            <ClickAwayListener onClickAway={ handleClose }>
-              <Box className={ styles.shopContainer } sx={ styleShopContainer }>
-                { wishlists && Object.entries(wishlists).map(([key, wishlist]) =>
-                  <Box key={ wishlist?.id }>
-                    <FormControlLabel
-                      control={ <Checkbox/> }
-                      label={ wishlist?.name }
-                      checked={ isProductInWishlist(key) }
-                      onChange={ (e, checked) => toggleShopProductEventHandler(checked, wishlist?.id) }/>
-                  </Box>,
-                ) }
-              </Box>
-            </ClickAwayListener>
-          </Popper>
-        </div>
-        <div className={ styles.content }>
-          <p><Link href={ data.url } underline="hover" target="_blank" rel="noreferrer">{ data.name }</Link></p>
-          <p>{ data.description }</p>
-          <p><strong>{ data.regularPrice }</strong></p>
-          <p data-code={ data.provider }>{ providerName(data.provider) }</p>
-        </div>
-      </div>
-    </div>
+    <Box className={ styles.productItem }>
+      <Box className={ styles.imageContainer }>
+        <img
+          src={ `${ data.imageUrl }` }
+          srcSet={ `${ data.imageUrl }` }
+          alt={ data.name }
+          loading="lazy"
+        />
+        <IconButton aria-label="add" className={ styles.btnShop } onClick={ shopClickEventHandler }>
+          <LoopIcon color="secondary"/>
+        </IconButton>
+        <Popper
+          open={ open }
+          anchorEl={ anchorEl }
+          placement="bottom-start"
+          disablePortal={ false }
+          modifiers={ [
+            {
+              name: "flip",
+              enabled: false,
+            },
+          ] }
+        >
+          <ClickAwayListener onClickAway={ handleClose }>
+            <Box className={ styles.shopContainer } sx={ styleShopContainer }>
+              { wishlists && Object.entries(wishlists).map(([key, wishlist]) =>
+                <Box key={ wishlist?.id }>
+                  <FormControlLabel
+                    control={ <Checkbox/> }
+                    label={ wishlist?.name }
+                    checked={ isProductInWishlist(key) }
+                    onChange={ (e, checked) => toggleShopProductEventHandler(checked, wishlist?.id) }/>
+                </Box>,
+              ) }
+            </Box>
+          </ClickAwayListener>
+        </Popper>
+      </Box>
+      <Box className={ styles.content }>
+        <Typography><Link href={ data.url } underline="hover" target="_blank" rel="noreferrer">{ data.name }</Link></Typography>
+        <Typography>{ data.description }</Typography>
+        <Typography><strong>{ data.regularPrice }</strong></Typography>
+        <Typography data-code={ data.provider }>{ providerName(data.provider) }</Typography>
+      </Box>
+    </Box>
   )
 }

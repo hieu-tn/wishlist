@@ -6,7 +6,7 @@ import store from "./store/store"
 import DefaultLayout from "layouts/Default.layout"
 import ErrorPage from "error-page"
 import HomeRoute from "modules/home/Home.route"
-import WishlistRoute from "modules/wishlist/Wishlist.route"
+import WishlistsRoute from "modules/wishlists/Wishlists.route"
 import { createTheme, ThemeProvider } from "@mui/material"
 
 
@@ -21,8 +21,8 @@ const router = createBrowserRouter([
         element: <HomeRoute/>,
       },
       {
-        path: "/wishlist",
-        element: <WishlistRoute/>,
+        path: "/wishlists",
+        element: <WishlistsRoute/>,
       },
     ],
   },
