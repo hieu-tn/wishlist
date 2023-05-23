@@ -3,9 +3,9 @@ import { Box, Snackbar, Stack } from "@mui/material"
 
 import Toast from "./Toast"
 import { useAppSelector } from "../../store/hooks"
-import { IToastMessage } from "../../models/toasts/toast.models"
 import { selectAllToasts } from "store/toasts/toastsSlice"
 import { IToastItem } from "../../store/toasts/toastsModels"
+import { IToastMessage } from "./toast.models"
 
 
 export default function ToastQueue() {

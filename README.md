@@ -22,6 +22,7 @@ An online store of grocery
 - tab/accordion to wishlists: future feature
 - only set store status if its action is triggered
 - cannot click where toast message take place (CSS issue)
+- toastQueue not setState correctly with multiple removeMessage at the same time (link issue cannot click on toast place)
 
 
 ### Done

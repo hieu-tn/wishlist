@@ -15,3 +15,13 @@ export interface IToastMessage {
   type: ToastItemType
   expiresAt: string
 }
+
+export enum ToastActionType {
+  ADD = "ADD",
+  REMOVE = "REMOVE",
+}
+
+export interface IToastQueue {
+  type: ToastActionType
+  message: IToastMessage
+}
