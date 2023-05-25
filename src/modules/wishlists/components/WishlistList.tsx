@@ -11,7 +11,7 @@ export default function WishlistList() {
   return (
     <Container>
       { wishlists && wishlists.map(w => (
-        <WishlistItem id={ w.id }/>
+        <WishlistItem key={w.id} id={ w.id }/>
       )) }
     </Container>
   )

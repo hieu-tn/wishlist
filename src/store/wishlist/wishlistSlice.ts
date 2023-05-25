@@ -47,12 +47,21 @@ const wishlistExtendedServerApi = serverApi.injectEndpoints({
       },
     }),
     getWishlist: builder.query<IWishlist, string>({
-      query: id => "get-wishlist.json",
+      query: id => `get-wishlist-${id}.json`,
       async onQueryStarted(_, {dispatch, getState, extra, requestId, queryFulfilled, getCacheEntry, updateCachedData}) {
         const {data} = await queryFulfilled
         dispatch(setWishlist(data))
       },
     }),
+    getWishlistProducts: builder.query<Array<IProductItem>, string>({
+      query: id => `get-wishlist-${id}-products.json`,
+      async onQueryStarted(_, {dispatch, getState, extra, requestId, queryFulfilled, getCacheEntry, updateCachedData}) {
+        const {data} = await queryFulfilled
+        for (let product of data) {
+          dispatch(addProduct(product))
+        }
+      },
+    })
   }),
 })
 
@@ -65,10 +74,7 @@ export const setWishlists = createAsyncThunk<Array<IWishlist>, Array<IWishlist>,
   async (wishlists, thunkApi) => {
     for (let wishlist of wishlists) {
       // @todo call api when backend is ready
-      // thunkApi.dispatch(wishlistExtendedServerApi.endpoints.getWishlist.initiate(wishlist.id))
-      if (!("products" in wishlist) || !wishlist.products) {
-        wishlist.products = productsAdapterInitialState.ids
-      }
+      thunkApi.dispatch(wishlistExtendedServerApi.endpoints.getWishlistProducts.initiate(wishlist.id))
     }
 
     return wishlists

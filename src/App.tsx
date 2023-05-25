@@ -1,13 +1,14 @@
 import React from "react"
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import { Provider } from "react-redux"
-import store from "./store/store"
+import { createTheme, ThemeProvider } from "@mui/material"
 
+import store from "./store/store"
+import "styles/app.scss"
 import DefaultLayout from "layouts/Default.layout"
 import ErrorPage from "error-page"
 import HomeRoute from "modules/home/Home.route"
 import WishlistsRoute from "modules/wishlists/Wishlists.route"
-import { createTheme, ThemeProvider } from "@mui/material"
 
 
 const router = createBrowserRouter([

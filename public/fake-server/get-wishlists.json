@@ -2,7 +2,7 @@
   {
     "id": 1,
     "name": "personal",
-    "products": []
+    "products": ["milk_1"]
   },
   {
     "id": 2,

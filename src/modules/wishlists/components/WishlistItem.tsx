@@ -1,15 +1,40 @@
 import { Accordion, AccordionDetails, AccordionSummary, Box, Grid, Typography } from "@mui/material"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import { blueGrey, purple, teal } from "@mui/material/colors"
+
 import { WishlistItemProps } from "../models/wishlist.model"
 import { useAppSelector } from "../../../store/hooks"
 import * as wishlistActions from "store/wishlist/wishlistSlice"
 
 
 export default function WishlistItem({id}: WishlistItemProps) {
+  const _useAppSelector = useAppSelector
   const data = useAppSelector(state => wishlistActions.selectWishlistById(state, id))
-  console.log(data)
-  
+
+  const displayProduct = (productId: string) => {
+    let product = _useAppSelector(state => wishlistActions.selectProductById(state, productId))
+
+    if (!product) return
+
+    return (
+      <Box key={ product.id }>
+        <Grid container columnSpacing={ 2 } rowSpacing={ 1 }>
+          <Grid item xs={ 2 }>
+            <img src={product.imageUrl} title={product.name}/>
+          </Grid>
+          <Grid item xs={ 6 }>
+            <Typography fontSize="large"><strong>{product.name}</strong></Typography>
+            <Typography fontSize="large"><strong>{product.description}</strong></Typography>
+            <Typography fontSize="large"><strong>{product.provider}</strong></Typography>
+          </Grid>
+          <Grid item xs={ 4 }>
+            <Typography>{product.regularPrice}</Typography>
+          </Grid>
+        </Grid>
+      </Box>
+    )
+  }
+
   return (
     <Box sx={ {py: 2, flexGrow: 1} }>
       <Grid container columnSpacing={ 2 } rowSpacing={ 2 }>
@@ -23,7 +48,7 @@ export default function WishlistItem({id}: WishlistItemProps) {
               <Typography><strong>{ data?.name }</strong></Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <p>p</p>
+              { data?.products && data.products.map(pId => displayProduct(pId)) }
             </AccordionDetails>
           </Accordion>
         </Grid>
@@ -51,4 +76,5 @@ export default function WishlistItem({id}: WishlistItemProps) {
       </Grid>
     </Box>
   )
+
 }

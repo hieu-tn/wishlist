@@ -1,4 +1,4 @@
-import { EntityId, EntityState, PayloadAction } from "@reduxjs/toolkit"
+import { EntityState, PayloadAction } from "@reduxjs/toolkit"
 
 import { IState } from "../models"
 import { IProductItem } from "../../modules/home/models/product.model"
@@ -13,7 +13,7 @@ export interface IWishlist {
   id: string
   name: string
   // only store productId
-  products: Array<EntityId>
+  products: Array<string>
 }
 
 export interface ISetWishlistsAction extends PayloadAction<Array<IWishlist>> {}
