@@ -3,7 +3,7 @@ import { Box, Checkbox, ClickAwayListener, FormControlLabel, IconButton, Link, P
 import LoopIcon from "@mui/icons-material/Loop"
 
 import styles from "styles/modules/home/components/product-item.module.scss"
-import { ProductItemProps, ToggleProductActions } from "modules/home/models/product.model"
+import { IProductItem, ProductItemProps, ToggleProductActions } from "modules/home/models/product.model"
 import { useAppDispatch, useAppSelector } from "../../../store/hooks"
 import * as crawlerActions from "store/crawler/crawlerSlice"
 import * as wishlistActions from "store/wishlist/wishlistSlice"
@@ -43,8 +43,10 @@ export default function ProductItem({data}: ProductItemProps) {
 
   const handleClose = () => setAnchorEl(null)
 
-  const isProductInWishlist = (key: string): boolean => {
-    return wishlists[key]?.products.some(p => p.id === key) || false
+  const isProductInWishlist = (wishlistProducts: Array<IProductItem> | undefined): boolean => {
+    if (!wishlistProducts) return false
+
+    return wishlistProducts.some(p => p.id === data.id)
   }
 
   const styleShopContainer = {
@@ -79,12 +81,12 @@ export default function ProductItem({data}: ProductItemProps) {
         >
           <ClickAwayListener onClickAway={ handleClose }>
             <Box className={ styles.shopContainer } sx={ styleShopContainer }>
-              { wishlists && Object.entries(wishlists).map(([key, wishlist]) =>
+              { wishlists && Object.values(wishlists).map(wishlist =>
                 <Box key={ wishlist?.id }>
                   <FormControlLabel
                     control={ <Checkbox/> }
                     label={ wishlist?.name }
-                    checked={ isProductInWishlist(key) }
+                    checked={ isProductInWishlist(wishlist?.products) }
                     onChange={ (e, checked) => toggleShopProductEventHandler(checked, wishlist?.id) }/>
                 </Box>,
               ) }
