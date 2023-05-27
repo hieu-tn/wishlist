@@ -1,11 +1,5 @@
 .productItem {
-  border: 1px solid gainsboro;
-  border-radius: 6px;
-  padding: 10px;
-
   &:hover {
-    box-shadow: 0 0 5px 2px gainsboro;
-
     .imageContainer img {
       transform: translate(-50%, -50%) scale(1.5);
     }
@@ -46,14 +40,7 @@
 }
 
 .shopContainer {
-  background: white;
   max-width: 200px;
-  font-family: IBM Plex Sans, sans-serif;
-  font-size: 0.875rem;
-  font-weight: 400;
-  line-height: 1.5;
-  padding: 12px;
-  border-radius: 12px;
 
   // firefox
   &:focus-visible {

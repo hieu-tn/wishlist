@@ -7,7 +7,7 @@ import { ProductItemProps, ToggleProductActions } from "modules/home/models/prod
 import { useAppDispatch, useAppSelector } from "../../../store/hooks"
 import * as crawlerActions from "store/crawler/crawlerSlice"
 import * as wishlistActions from "store/wishlist/wishlistSlice"
-import { blue, grey } from "@mui/material/colors"
+import { blue, blueGrey, grey, purple, teal } from "@mui/material/colors"
 
 
 export default function ProductItem({data}: ProductItemProps) {
@@ -44,24 +44,18 @@ export default function ProductItem({data}: ProductItemProps) {
   const handleClose = () => setAnchorEl(null)
 
   const isProductInWishlist = (key: string): boolean => {
-    return wishlists[key]?.products.includes(data.id) || false
+    return wishlists[key]?.products.some(p => p.id === key) || false
   }
 
   const styleShopContainer = {
     px: 3, py: 1 / 2, color: grey[900], background: "#fff",
-    boxShadow: `0px 2px 24px ${ blue[100] }`,
-    "&:hover": {
-      borderColor: blue[400],
-    },
-    "&:focus": {
-      borderColor: blue[400],
-      boxShadow: `0 0 0 3px ${ blue[200] }`,
-    },
+    borderRadius: 1.5,
+    boxShadow: `0px 2px 24px ${ teal[300] }`,
   }
 
   return (
-    <Box className={ styles.productItem }>
-      <Box className={ styles.imageContainer }>
+    <Box className={ styles.productItem } sx={ {borderRadius: 2, border: `1px solid ${ blueGrey[200] }`, "&:hover": {boxShadow: `0 0 5px 2px ${ grey[300] }`}} }>
+      <Box className={ styles.imageContainer } sx={ {borderRadius: 2} }>
         <img
           src={ `${ data.imageUrl }` }
           srcSet={ `${ data.imageUrl }` }
@@ -98,7 +92,7 @@ export default function ProductItem({data}: ProductItemProps) {
           </ClickAwayListener>
         </Popper>
       </Box>
-      <Box className={ styles.content }>
+      <Box className={ styles.content } sx={ {px: 2, pb: 2, pt: 1} }>
         <Typography><Link href={ data.url } underline="hover" target="_blank" rel="noreferrer">{ data.name }</Link></Typography>
         <Typography>{ data.description }</Typography>
         <Typography><strong>{ data.regularPrice }</strong></Typography>

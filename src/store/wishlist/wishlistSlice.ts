@@ -1,7 +1,7 @@
 import { ActionReducerMapBuilder, createAsyncThunk, createEntityAdapter, createSlice } from "@reduxjs/toolkit"
 
 import { RootState } from "../store"
-import { StoreStatus, WISHLIST_STORE } from "../../constants/store"
+import { StoreStatus, WISHLISTS_STORE } from "../../constants/store"
 import { AsyncThunkConfig } from "../models"
 import {
   IAddProductAction,
@@ -27,12 +27,6 @@ const wishlistsAdapter = createEntityAdapter<IWishlist>({
 })
 const wishlistsInitialState = wishlistsAdapter.getInitialState()
 
-const productsAdapter = createEntityAdapter<IProductItem>({
-  selectId: p => p.id,
-  sortComparer: (a, b) => a.id.localeCompare(b.id),
-})
-const productsAdapterInitialState = productsAdapter.getInitialState()
-
 // ------------------------------------------
 
 // ---------------- API ----------------
@@ -47,21 +41,19 @@ const wishlistExtendedServerApi = serverApi.injectEndpoints({
       },
     }),
     getWishlist: builder.query<IWishlist, string>({
-      query: id => `get-wishlist-${id}.json`,
+      query: id => `get-wishlist-${ id }.json`,
       async onQueryStarted(_, {dispatch, getState, extra, requestId, queryFulfilled, getCacheEntry, updateCachedData}) {
         const {data} = await queryFulfilled
         dispatch(setWishlist(data))
       },
     }),
-    getWishlistProducts: builder.query<Array<IProductItem>, string>({
-      query: id => `get-wishlist-${id}-products.json`,
-      async onQueryStarted(_, {dispatch, getState, extra, requestId, queryFulfilled, getCacheEntry, updateCachedData}) {
-        const {data} = await queryFulfilled
-        for (let product of data) {
-          dispatch(addProduct(product))
-        }
-      },
-    })
+    // getWishlistProducts: builder.query<Array<IProductItem>, string>({
+    //   query: id => `get-wishlist-${ id }-products.json`,
+    //   async onQueryStarted(id, {dispatch, getState, extra, requestId, queryFulfilled, getCacheEntry, updateCachedData}) {
+    //     const {data} = await queryFulfilled
+    //     dispatch(setWishlist({id, products: data}))
+    //   },
+    // }),
   }),
 })
 
@@ -70,11 +62,11 @@ const wishlistExtendedServerApi = serverApi.injectEndpoints({
 // ---------------- Thunk ----------------
 
 export const setWishlists = createAsyncThunk<Array<IWishlist>, Array<IWishlist>, AsyncThunkConfig>(
-  WISHLIST_STORE + "/setWishlists",
+  WISHLISTS_STORE + "/setWishlists",
   async (wishlists, thunkApi) => {
     for (let wishlist of wishlists) {
       // @todo call api when backend is ready
-      thunkApi.dispatch(wishlistExtendedServerApi.endpoints.getWishlistProducts.initiate(wishlist.id))
+      thunkApi.dispatch(wishlistExtendedServerApi.endpoints.getWishlist.initiate(wishlist.id))
     }
 
     return wishlists
@@ -82,37 +74,17 @@ export const setWishlists = createAsyncThunk<Array<IWishlist>, Array<IWishlist>,
 )
 
 export const addProductToWishlist = createAsyncThunk<IAddProductToWishlist, IAddProductToWishlist, AsyncThunkConfig>(
-  WISHLIST_STORE + "/addProductToWishlist",
+  WISHLISTS_STORE + "/addProductToWishlist",
   async ({wishlistId, product}, thunkApi) => {
     // @todo should call api when backend is ready
-    thunkApi.dispatch(addProduct(product))
     return {wishlistId, product}
   },
 )
 
 export const removeProductFromWishlist = createAsyncThunk<IRemoveProductFromWishlist, IRemoveProductFromWishlist, AsyncThunkConfig>(
-  WISHLIST_STORE + "/removeProductFromWishlist",
+  WISHLISTS_STORE + "/removeProductFromWishlist",
   async ({wishlistId, productId}, thunkApi) => {
     // @todo should call api when backend is ready
-    let state = thunkApi.getState() as RootState
-
-    let shouldRemove = true
-    // if user has more than 1 wishlist, check other wishlists whether product belongs to
-    if (Object.keys(state.wishlist.entities).length > 1) {
-      for (let w of Object.values(state.wishlist.entities)) {
-        w = w as IWishlist
-        if (w.id !== wishlistId) {
-          let shouldKeep = w.products.some(p => p === productId)
-          if (shouldKeep) {
-            shouldRemove = false
-            break
-          }
-        }
-      }
-    }
-
-    if (shouldRemove) thunkApi.dispatch(removeProduct(productId))
-
     return {wishlistId, productId}
   },
 )
@@ -123,22 +95,15 @@ export const removeProductFromWishlist = createAsyncThunk<IRemoveProductFromWish
 
 const initialState: IWishlistState = {
   ...wishlistsInitialState,
-  products: productsAdapterInitialState,
   status: StoreStatus.IDLE,
 }
 
 const wishlistSlice = createSlice({
-  name: WISHLIST_STORE,
+  name: WISHLISTS_STORE,
   initialState,
   reducers: {
     setWishlist(state, action: ISetWishlistAction) {
       wishlistsAdapter.upsertOne(state, action.payload)
-    },
-    addProduct(state, action: IAddProductAction) {
-      productsAdapter.upsertOne(state.products, action.payload)
-    },
-    removeProduct(state, action: IRemoveProductAction) {
-      productsAdapter.removeOne(state.products, action.payload)
     },
   },
   extraReducers: (builder: ActionReducerMapBuilder<IWishlistState>) => {
@@ -147,7 +112,7 @@ const wishlistSlice = createSlice({
     })
     builder.addCase(addProductToWishlist.fulfilled, (state: IWishlistState, action: IAddProductToWishlistAction) => {
       let products = state.entities[action.payload.wishlistId]?.products ?? []
-      products.push(action.payload.product.id)
+      products.push(action.payload.product)
       wishlistsAdapter.updateOne(state, {
         id: action.payload.wishlistId,
         changes: {
@@ -157,7 +122,7 @@ const wishlistSlice = createSlice({
     })
     builder.addCase(removeProductFromWishlist.fulfilled, (state: IWishlistState, action: IRemoveProductFromWishlistAction) => {
       let products = state.entities[action.payload.wishlistId]?.products ?? []
-      products = products.filter(x => x !== action.payload.productId)
+      products = products.filter(p => p.id !== action.payload.productId)
       // @todo found duplicates, violate DRY
       wishlistsAdapter.updateOne(state, {
         id: action.payload.wishlistId,
@@ -178,20 +143,12 @@ export const {
   selectAll: selectAllWishlists,
   selectTotal: selectTotalWishlists,
   selectById: selectWishlistById,
-} = wishlistsAdapter.getSelectors((state: RootState) => state.wishlist)
-
-export const {
-  selectIds: selectProductIds,
-  selectEntities: selectProductEntities,
-  selectAll: selectAllProducts,
-  selectTotal: selectTotalProducts,
-  selectById: selectProductById,
-} = productsAdapter.getSelectors((state: RootState) => state.wishlist.products)
+} = wishlistsAdapter.getSelectors((state: RootState) => state[WISHLISTS_STORE])
 
 export const {
   useGetWishlistsQuery,
   useGetWishlistQuery,
 } = wishlistExtendedServerApi
 
-export const {setWishlist, addProduct, removeProduct} = wishlistSlice.actions
+export const {setWishlist} = wishlistSlice.actions
 export default wishlistSlice.reducer

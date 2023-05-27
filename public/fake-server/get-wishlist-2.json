@@ -1,5 +1,15 @@
 {
   "id": 2,
   "name": "a long wishlist that needs to be handled overflow",
-  "products": []
+  "products": [
+    {
+      "id": "milk_3",
+      "name": "Milk 3",
+      "imageUrl": "https://i5.walmartimages.com/asr/0b180cd3-d996-45a3-a5f8-bdea0b101ac7.76b71de6b8bcd11baf342cd6111de6aa.jpeg",
+      "url": "https://www.walmart.ca/en/ip/Dairyland-3-25-milk/6000075688890",
+      "description": "desc milk 3",
+      "regularPrice": "$300",
+      "provider": "WALMART"
+    }
+  ]
 }

@@ -6,5 +6,5 @@ export enum StoreStatus {
 }
 
 export const CRAWLER_STORE = "crawler"
-export const WISHLIST_STORE = "wishlist"
+export const WISHLISTS_STORE = "wishlists"
 export const TOASTS_STORE = "toasts"

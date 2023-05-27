@@ -108,7 +108,7 @@ export const {
   selectAll: selectAllProviders,
   selectTotal: selectTotalProviders,
   selectById: selectProviderById,
-} = providersAdapter.getSelectors((state: RootState) => state.crawler.providers)
+} = providersAdapter.getSelectors((state: RootState) => state[CRAWLER_STORE].providers)
 
 //getSelectors creates these selectors and rename them with aliases using destructuring
 export const {
@@ -117,7 +117,7 @@ export const {
   selectAll: selectAllMatches,
   selectTotal: selectTotalMatches,
   selectById: selectMatchById,
-} = matchesAdapter.getSelectors((state: RootState) => state.crawler.matches)
+} = matchesAdapter.getSelectors((state: RootState) => state[CRAWLER_STORE].matches)
 
 export const {
   useGetProvidersQuery,

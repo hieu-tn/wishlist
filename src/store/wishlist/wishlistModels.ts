@@ -4,16 +4,12 @@ import { IState } from "../models"
 import { IProductItem } from "../../modules/home/models/product.model"
 
 
-export interface IWishlistState extends IState, EntityState<IWishlist> {
-  // products stored in all wishlists
-  products: EntityState<IProductItem>
-}
+export interface IWishlistState extends IState, EntityState<IWishlist> {}
 
 export interface IWishlist {
   id: string
   name: string
-  // only store productId
-  products: Array<string>
+  products: Array<IProductItem>
 }
 
 export interface ISetWishlistsAction extends PayloadAction<Array<IWishlist>> {}
