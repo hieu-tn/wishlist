@@ -62,7 +62,7 @@ export default function WishlistItem({id}: WishlistItemProps) {
         </Grid>
         <Grid item xs={ 4 }>
           <Box sx={ {
-            flexGrow: 1, border: `1px solid ${ blueGrey[300] }`, p: 2, pb: 4, borderRadius: 3,
+            flexGrow: 1, border: `1px solid ${ blueGrey[300] }`, p: 2, pb: 4, borderRadius: 2,
             position: "sticky", top: "8px",
           } }>
             <Typography variant="h5" sx={ {color: purple[800], pb: 2} }><strong>{ data?.name }</strong></Typography>

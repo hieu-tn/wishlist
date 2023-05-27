@@ -15,11 +15,8 @@ An online store of grocery
 - persist store
 - enhance UI
 - responsive
-- wishlist page layout
 - remove product from wishlist page
-- calculate bills
 - send to store button: migrate products to stores by modifying localStorage values (investigate)
-- tab/accordion to wishlists: future feature
 - only set store status if its action is triggered
 - cannot click where toast message take place (CSS issue)
 - toastQueue not setState correctly with multiple removeMessage at the same time (link issue cannot click on toast place)
@@ -46,3 +43,6 @@ An online store of grocery
 - show add products when clicking toggle button
 - popover toggle product actions: cannot scroll up/down
 - mui navigation to menu
+- wishlist page layout
+- calculate bills
+- tab/accordion to wishlists: future feature
