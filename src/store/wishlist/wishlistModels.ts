@@ -25,8 +25,6 @@ export interface IAddProductToWishlist {
 
 export interface IAddProductToWishlistAction extends PayloadAction<IAddProductToWishlist> {}
 
-export interface IRemoveProductAction extends PayloadAction<string> {}
-
 export interface IRemoveProductFromWishlist {
   wishlistId: string
   productId: string

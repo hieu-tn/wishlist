@@ -87,6 +87,14 @@ export const removeProductFromWishlist = createAsyncThunk<IRemoveProductFromWish
   },
 )
 
+export const decreaseProductAmountFromWishlist = createAsyncThunk<IRemoveProductFromWishlist, IRemoveProductFromWishlist, AsyncThunkConfig>(
+  WISHLISTS_STORE + "/decreaseProductAmountFromWishlist",
+  async ({wishlistId, productId}, thunkApi) => {
+    // @todo should call api when backend is ready
+    return {wishlistId, productId}
+  },
+)
+
 // ------------------------------------------
 
 // ---------------- WISHLIST SLICE ----------------
@@ -110,7 +118,16 @@ const wishlistSlice = createSlice({
     })
     builder.addCase(addProductToWishlist.fulfilled, (state: IWishlistState, action: IAddProductToWishlistAction) => {
       let products = state.entities[action.payload.wishlistId]?.products ?? []
-      products.push(action.payload.product)
+      let product = products.find(p => p.id === action.payload.product.id)
+
+      if (product) {
+        // product already in wishlist
+        product.amount += 1
+      } else {
+        // product not in wishlist yet
+        products.push({...action.payload.product, amount: 1})
+      }
+
       wishlistsAdapter.updateOne(state, {
         id: action.payload.wishlistId,
         changes: {
@@ -122,6 +139,21 @@ const wishlistSlice = createSlice({
       let products = state.entities[action.payload.wishlistId]?.products ?? []
       products = products.filter(p => p.id !== action.payload.productId)
       // @todo found duplicates, violate DRY
+      wishlistsAdapter.updateOne(state, {
+        id: action.payload.wishlistId,
+        changes: {
+          products: products,
+        },
+      })
+    })
+    builder.addCase(decreaseProductAmountFromWishlist.fulfilled, (state: IWishlistState, action: IRemoveProductFromWishlistAction) => {
+      let products = state.entities[action.payload.wishlistId]?.products ?? []
+      let product = products.find(p => p.id === action.payload.productId)
+
+      // product not in wishlist or amount = 0
+      if (!product || product.amount === 0) return
+
+      product.amount -= 1
       wishlistsAdapter.updateOne(state, {
         id: action.payload.wishlistId,
         changes: {
