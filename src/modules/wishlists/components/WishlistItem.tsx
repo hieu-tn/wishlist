@@ -1,9 +1,10 @@
-import { Accordion, AccordionDetails, AccordionSummary, Box, Grid, Typography } from "@mui/material"
+import { Accordion, AccordionDetails, AccordionSummary, Box, Grid, IconButton, Typography } from "@mui/material"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import { blueGrey, purple, teal } from "@mui/material/colors"
+import HighlightOffIcon from "@mui/icons-material/HighlightOff"
 
 import { WishlistItemProps } from "../models/wishlist.model"
-import { useAppSelector } from "../../../store/hooks"
+import { useAppDispatch, useAppSelector } from "../../../store/hooks"
 import * as wishlistActions from "store/wishlist/wishlistSlice"
 import { useEffect, useState } from "react"
 
@@ -11,6 +12,7 @@ import { useEffect, useState } from "react"
 export default function WishlistItem({id}: WishlistItemProps) {
   const [totalPrice, setTotalPrice] = useState<number>(0)
   const [totalProducts, setTotalProducts] = useState<number>(0)
+  const dispatch = useAppDispatch()
   const data = useAppSelector(state => wishlistActions.selectWishlistById(state, id))
 
   useEffect(() => {
@@ -24,6 +26,10 @@ export default function WishlistItem({id}: WishlistItemProps) {
       }, 0)
     })
   }, [data])
+
+  const removeProductFromWishlist = (productId: string) => {
+    dispatch(wishlistActions.removeProductFromWishlist({wishlistId: id, productId: productId}))
+  }
 
   return (
     <Box sx={ {py: 2, flexGrow: 1} }>
@@ -51,9 +57,17 @@ export default function WishlistItem({id}: WishlistItemProps) {
                       <Typography>{ p.provider }</Typography>
                     </Grid>
                     <Grid item xs={ 2 }>
-                      <Typography align="right" fontSize="large"><strong>{ p.regularPrice }</strong></Typography>
+                      <Box sx={ {textAlign: "right"} }>
+                        <IconButton aria-label="remove" onClick={ () => removeProductFromWishlist(p.id) }>
+                          <HighlightOffIcon color="error"/>
+                        </IconButton>
+                      </Box>
                     </Grid>
-                    <Grid item xs={ 1 }></Grid>
+                    <Grid item xs={ 1 }>
+                      <Box sx={ {py: 0.75} }>
+                        <Typography align="right" fontSize="large"><strong>{ p.regularPrice }</strong></Typography>
+                      </Box>
+                    </Grid>
                   </Grid>
                 </Box>,
               ) }
