@@ -6,6 +6,7 @@
     "url": "https://www.walmart.ca/en/ip/Dairyland-3-25-milk/6000075688890",
     "description": "desc milk 3",
     "regularPrice": "$300",
-    "provider": "WALMART"
+    "provider": "WALMART",
+    "amount": 2
   }
 ]

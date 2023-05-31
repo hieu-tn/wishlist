@@ -9,7 +9,7 @@ export interface IWishlistState extends IState, EntityState<IWishlist> {}
 export interface IWishlist {
   id: string
   name: string
-  products: Array<IProductItem>
+  products: Array<IWishlistProduct>
 }
 
 export interface ISetWishlistsAction extends PayloadAction<Array<IWishlist>> {}
@@ -33,3 +33,7 @@ export interface IRemoveProductFromWishlist {
 }
 
 export interface IRemoveProductFromWishlistAction extends PayloadAction<IRemoveProductFromWishlist> {}
+
+export interface IWishlistProduct extends IProductItem {
+  amount: number
+}

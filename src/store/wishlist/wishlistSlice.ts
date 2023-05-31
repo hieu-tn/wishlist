@@ -4,9 +4,8 @@ import { RootState } from "../store"
 import { StoreStatus, WISHLISTS_STORE } from "../../constants/store"
 import { AsyncThunkConfig } from "../models"
 import {
-  IAddProductAction,
   IAddProductToWishlist,
-  IAddProductToWishlistAction, IRemoveProductAction,
+  IAddProductToWishlistAction,
   IRemoveProductFromWishlist,
   IRemoveProductFromWishlistAction,
   ISetWishlistAction,
@@ -15,7 +14,6 @@ import {
   IWishlistState,
 } from "./wishlistModels"
 import serverApi from "../api/serverApi"
-import { IProductItem } from "../../modules/home/models/product.model"
 import { extraStatusReducers } from "../actions"
 
 

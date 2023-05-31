@@ -6,7 +6,8 @@
     "url": "https://www.walmart.ca/en/ip/Dairyland-2-Partly-Skimmed-Milk/6000075688886",
     "description": "desc milk 1",
     "regularPrice": "$100",
-    "provider": "WALMART"
+    "provider": "WALMART",
+    "amount": 80
   },
   {
     "id": "milk_2",
@@ -15,6 +16,7 @@
     "url": "https://www.realcanadiansuperstore.ca/lactose-free-2-partly-skimmed-ultrafiltered-milk/p/21128369_EA",
     "description": "desc milk 2",
     "regularPrice": "$200",
-    "provider": "CANADIAN_SUPERSTORE"
+    "provider": "CANADIAN_SUPERSTORE",
+    "amount": 1
   }
 ]
